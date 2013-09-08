@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Jlib</string>
+    
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="call">Call</string>
+    <string name="alert">Alert</string>
+</resources>
