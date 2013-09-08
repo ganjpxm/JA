@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">简用</string>
+
+    <!-- Common -->
+    <string name="btn_ok">好</string>
+	<string name="btn_continue">继续</string>
+	<string name="btn_cancel">取消</string>
+	<string name="btn_yes">是</string>
+	<string name="btn_no">否</string>
+	<string name="btn_close">关闭</string>
+	<string name="btn_submit">提交</string>
+	<string name="btn_back">返回</string>
+	<string name="btn_next">下一步</string>
+	<string name="btn_refresh">刷新</string>
+	<string name="btn_exit">离开</string>
+	<string name="btn_about">关于</string>
+	<string name="btn_settings">设置</string>
+	<string name="loading">加载中&#8230;&#8230;&#8230;</string>
+    <string name="empty"></string>
+    <string name="alert">警告</string>
+	<string name="btn_switch_language">English</string>
+    
+    
+</resources>

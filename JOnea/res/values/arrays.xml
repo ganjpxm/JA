@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="home_tab_items">
+    	<item>HOME</item>
+    	<item>ANDROID</item>
+    	<item>IPHONE</item>
+    	<item>MOBILE APP</item>
+	</string-array>
+	
+	<string-array name="menu_items">
+    	<item>Sample:Android:User Interface,Media and Camera, Loaction and Sensors;
+    	    Jquery Mobile:Collapsibles,Controlgroups,Listviews,Navigation,Panels,Popups,Responsive Tables,Sliders,Swipe;
+    	    Sencha Touch:User Interface,Animations,Touch Events,Data,Media,Themes,Graphics;</item>
+    	<item>Program:Android:Compatibility,Supporting Multiple Screens,Supporting Tablets and Handsets;
+    	    iOS:Audio &#38; Video,Data Management,General,Networking &#38; Internet;</item>
+    	<item>News:Mobile Phone:iPhone 5,Samsung Galaxy S4,HTC ONE,XiaoMi 2S;Mobile App:Facebook,Path,Twitter,Wechat;</item>
+    	<item>Setting:Wi-Fi:Go to Wi-Fi panel;Wi-Fi HotSpot:Create a WI-FI HotSpot(GAN);Alarm Clock:Go to alarm clock panel;</item>
+	</string-array>
+	
+</resources>

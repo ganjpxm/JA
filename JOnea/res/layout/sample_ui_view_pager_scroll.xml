@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include android:id="@+id/header" layout="@layout/common_header" />
+    
+    <org.ganjp.jlib.core.view.ScrollViewGroup android:id="@+id/pagers" android:layout_below="@+id/header"
+        android:layout_width="match_parent" android:layout_height="match_parent" />
+
+    <org.ganjp.jlib.core.view.PageScrollBar android:id="@+id/scrollbar"
+        android:layout_width="match_parent" android:layout_height="10dp" android:layout_alignParentBottom="true" />
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp" android:gravity="center_horizontal" >
+
+        <ImageView android:id="@+id/pageNum1" android:layout_width="10dp"
+            android:layout_height="10dp" android:src="@drawable/icon_circle_page" />
+
+        <ImageView android:id="@+id/pageNum2" android:layout_width="10dp"
+            android:layout_height="10dp" android:layout_marginLeft="10dp" android:src="@drawable/icon_circle_page" />
+
+        <ImageView android:id="@+id/pageNum3" android:layout_width="10dp" android:layout_height="10dp"
+            android:layout_marginLeft="10dp" android:src="@drawable/icon_circle_page" />
+    </LinearLayout>
+
+</RelativeLayout>

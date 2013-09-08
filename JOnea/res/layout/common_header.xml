@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:id="@+id/header_ll" android:layout_width="match_parent" android:layout_height="45dp"
+    android:background="@color/black" android:orientation="horizontal">
+    
+    <RelativeLayout android:layout_width="0dip" android:layout_height="fill_parent" android:layout_weight="1" android:orientation="horizontal" >
+        <Button android:id="@+id/left_btn" android:layout_width="30dp" android:layout_height="30dp" 
+           android:layout_alignParentLeft="true" android:layout_marginLeft="10dp" android:background="@drawable/icon_back_white"
+           android:layout_marginTop="7dp" android:text="@string/empty" />
+    </RelativeLayout>
+
+	<TextView android:id="@+id/title_tv" android:layout_width="0dp" android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" android:gravity="center" android:layout_weight="3"
+	  	android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+	  	android:textColor="@color/white" android:text="@string/about" android:textSize="20sp"/>
+
+    <RelativeLayout android:layout_width="0dip" android:layout_height="fill_parent" android:layout_weight="1" android:orientation="horizontal" >
+    	<Button android:id="@+id/right_btn" android:layout_width="30dp" android:layout_height="30dp" 
+    	    android:layout_alignParentRight="true" android:layout_marginRight="10dp" android:layout_marginTop="7dp" 
+    	    android:text="@string/empty" android:background="@drawable/icon_menu_white" android:visibility="invisible"/>
+	</RelativeLayout>
+</LinearLayout>

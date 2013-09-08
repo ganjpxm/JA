@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JOne</string>
+    <!-- ****************************************** Home **************************************************-->
+    <string name="home">HOME</string>
+    
+	<!-- ****************************************** Sample **************************************************-->
+	<!-- ****** Ui ******* -->
+	<!-- Dialog -->
+	<string name="one_btn_dialog">One Button Dialog</string>
+	<string name="two_btn_dialog">Two Button Dialog</string>
+	<string name="three_btn_dialog">Three Button Dialog</string>
+ 	<string name="input_dialog">Input Dialog</string>
+ 	<string name="radio_dialog">Radios Dialog</string>
+ 	<string name="checkbox_dialog">Checkboxs Dialog</string>
+ 	<string name="list_dialog">List Dialog</string>
+ 	<string name="custome_dialog">Custome Dialog</string>
+ 	<string name="progress_dialog">Progress Dialog</string>
+ 	<string name="time_dialog">Time Dialog</string>
+ 	<string name="date_dialog">Date Dialog</string>
+
+    <!-- ****************************************** Common -->
+    <string name="loading">Loading</string>
+	<string name="refresh">Refresh</string>
+	<string name="exit">Exit</string>
+    <string name="close">Close</string>
+    <string name="about">About</string>
+    <string name="empty"></string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="alert">Alert</string>
+    <string name="settings">Settings</string>
+	<string name="ok">OK</string>
+	<string name="cancel">Cancel</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="submit">Submit</string>
+	<string name="upload">Upload</string>
+	<string name="done">Done</string>
+	<string name="skip">Skip</string>
+	<string name="continu">Continue</string>
+	<string name="confirm">Confirm</string>
+	<string name="prompt">Prompt</string>
+	<string name="send">Send</string>
+	<string name="clear">Clear</string>
+	<string name="language">中文</string>
+	<string name="sample">Sample</string>
+	<string name="title">Title</string>
+	<string name="message">Message</string>
+	<string name="more">More</string>
+	<string name="call">Call</string>
+</resources>
