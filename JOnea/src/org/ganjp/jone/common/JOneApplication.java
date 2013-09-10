@@ -1,5 +1,5 @@
 /**
- * JpActivity.java
+ * JpApplication.java
  *
  * Created by Gan Jianping on 07/09/13.
  * Copyright (c) 2013 GANJP. All rights reserved.
@@ -10,12 +10,12 @@ import org.ganjp.jlib.core.BaseApplication;
 
 
 /**
- * <p>Base Activity</p>
+ * <p>Base Application</p>
  * 
  * @author GanJianping
- *
+ * @since v1.0.0
  */
-public class JpApplication extends BaseApplication {
+public class JOneApplication extends BaseApplication {
 	
 	
 }	

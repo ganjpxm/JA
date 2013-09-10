@@ -2,7 +2,7 @@ package org.ganjp.jone.sample.ui;
 
 import org.ganjp.jlib.core.util.DialogUtil;
 import org.ganjp.jone.R;
-import org.ganjp.jone.common.JpActivity;
+import org.ganjp.jone.common.JOneActivity;
 import org.ganjp.jone.sample.SampleActivity;
 
 import android.app.DatePickerDialog;
@@ -19,7 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class UiDialogActivity extends JpActivity {
+public class UiDialogActivity extends JOneActivity {
 	private Button oneBtnDialogBtn;
 	private Button twoBtnDialogBtn;
 	private Button threeeBtnDialogBtn;

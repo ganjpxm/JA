@@ -1,4 +1,4 @@
-package org.ganjp.jone.common.adapt;
+package org.ganjp.jone.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class MenuListAdapter extends BaseAdapter {
 	
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-    	View view = inflater.inflate(R.layout.template_list_item_menu, null);
+    	View view = inflater.inflate(R.layout.common_list_item_menu, null);
     	String title="";
     	String description="";
     	String[] itemArr = list.get(position);

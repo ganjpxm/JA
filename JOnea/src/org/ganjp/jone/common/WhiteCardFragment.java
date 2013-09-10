@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.ganjp.jone.common.fragment;
+package org.ganjp.jone.common;
 
 import org.ganjp.jone.R;
 
@@ -29,18 +29,27 @@ import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
 
-public class SuperAwesomeCardFragment extends Fragment {
+/**
+ * <p>White Card Fragment</p>
+ * <pre>
+ * WhiteCardFragment.newInstance(position)
+ * </pre>
+ * 
+ * @author Gan Jianping
+ * @since v1.0.0
+ */
+public class WhiteCardFragment extends Fragment {
 
 	private static final String ARG_POSITION = "position";
 
 	private int position;
 
-	public static SuperAwesomeCardFragment newInstance(int position) {
-		SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
+	public static WhiteCardFragment newInstance(int position) {
+		WhiteCardFragment fragment = new WhiteCardFragment();
 		Bundle b = new Bundle();
 		b.putInt(ARG_POSITION, position);
-		f.setArguments(b);
-		return f;
+		fragment.setArguments(b);
+		return fragment;
 	}
 
 	@Override

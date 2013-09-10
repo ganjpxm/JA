@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.ganjp.jlib.core.view.CornerListView;
 import org.ganjp.jone.R;
-import org.ganjp.jone.common.JpActivity;
+import org.ganjp.jone.common.JOneActivity;
 import org.ganjp.jone.sample.ui.UiDialogActivity;
 import org.ganjp.jone.sample.ui.UiScrollViewPagerActivity;
 
@@ -20,7 +20,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class SampleActivity extends JpActivity implements OnItemClickListener {
+public class SampleActivity extends JOneActivity implements OnItemClickListener {
 	private CornerListView listView_1, listView_2;
 	private ArrayList<Map<String, String>> listData, listData2;
 	
@@ -75,7 +75,7 @@ public class SampleActivity extends JpActivity implements OnItemClickListener {
 		map.put("text", "View Pager");
 		listData.add(map);
 		
-		return new SimpleAdapter(SampleActivity.this, listData, R.layout.sample_activity_list_item, new String[] { "text" }, new int[] { R.id.tv_list_item });
+		return new SimpleAdapter(SampleActivity.this, listData, R.layout.sample_ui_list_item, new String[] { "text" }, new int[] { R.id.tv_list_item });
 	}
 
 	private SimpleAdapter getSimpleAdapter_2() {
@@ -93,7 +93,7 @@ public class SampleActivity extends JpActivity implements OnItemClickListener {
 		map.put("text", "Broadcast");
 		listData2.add(map);
 
-		return new SimpleAdapter(SampleActivity.this, listData2, R.layout.sample_activity_list_item, new String[] { "text" },
+		return new SimpleAdapter(SampleActivity.this, listData2, R.layout.sample_ui_list_item, new String[] { "text" },
 				new int[] { R.id.tv_list_item });
 
 	}

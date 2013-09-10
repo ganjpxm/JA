@@ -1,10 +1,14 @@
-
+/**
+ * HomeActivity.java
+ *
+ * Created by Gan Jianping on 09/09/13.
+ * Copyright (c) 2013 GANJP. All rights reserved.
+ */
 package org.ganjp.jone.common;
 
 import org.ganjp.jlib.core.view.PagerSlidingTabStrip;
 import org.ganjp.jone.R;
-import org.ganjp.jone.common.fragment.MenuFragment;
-import org.ganjp.jone.common.fragment.SuperAwesomeCardFragment;
+import org.ganjp.jone.knowledge.KnowledgeFragment;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,11 +21,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.View;
 
-public class HomeActivity extends ActionBarActivity {
+/**
+ * <p>Home Fragment Activity</p>
+ * 
+ * @author Gan Jianping
+ * @since 1.0.0
+ */
+public class HomeFragmentActivity extends JOneActionBarActivity {
 
 	private final Handler handler = new Handler();
 
@@ -83,8 +92,6 @@ public class HomeActivity extends ActionBarActivity {
 
 		currentColor = newColor;
 
-		// http://stackoverflow.com/questions/11002691/actionbar-setbackgrounddrawable-nulling-background-from-thread-handler
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(true);
 
 	}
@@ -127,7 +134,7 @@ public class HomeActivity extends ActionBarActivity {
 	};
 
 	public class HomePagerAdapter extends FragmentPagerAdapter {
-		private final String[] homeTabItem = JpApplication.getAppContext().getResources().getStringArray(R.array.home_tab_items);
+		private final String[] homeTabItem = JOneApplication.getAppContext().getResources().getStringArray(R.array.home_tab_items);
 		
 		public HomePagerAdapter(FragmentManager fm) {
 			super(fm);
@@ -147,8 +154,16 @@ public class HomeActivity extends ActionBarActivity {
 		public Fragment getItem(int position) {
 			if (position==0) {
 				return new MenuFragment();
+			} else if (position==1) {
+				return KnowledgeFragment.newInstance(JOneConst.PROGRAM_ANDROID);
+			} else if (position==2) {
+				return KnowledgeFragment.newInstance(JOneConst.PROGRAM_IOS);
+			} else if (position==3) {
+				return KnowledgeFragment.newInstance(JOneConst.NEWS_MOBILE_APP);
+			} else {
+				return WhiteCardFragment.newInstance(position);
 			}
-			return SuperAwesomeCardFragment.newInstance(position);
+			
 		}
 
 	}

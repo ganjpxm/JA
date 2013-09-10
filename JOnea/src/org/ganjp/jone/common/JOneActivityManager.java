@@ -8,20 +8,18 @@ package org.ganjp.jone.common;
 
 import org.ganjp.jlib.core.ActivityStack;
 
-
-
 /**
  * <p>Manage Activity by stack</p>
  * 
  * @author Gan Jianping
  * @since 1.0.0
  */
-public class JpActivityManager extends ActivityStack {
-	private static JpActivityManager sInstance;
+public class JOneActivityManager extends ActivityStack {
+	private static JOneActivityManager sInstance;
 	
-	public static JpActivityManager getInstance() {
+	public static JOneActivityManager getInstance() {
 		if (sInstance == null) {
-			sInstance = new JpActivityManager();
+			sInstance = new JOneActivityManager();
 		}
 		return sInstance;
 	}

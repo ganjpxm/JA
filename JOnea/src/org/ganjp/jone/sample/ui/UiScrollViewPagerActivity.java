@@ -4,7 +4,7 @@ import org.ganjp.jlib.core.view.PageScrollBar;
 import org.ganjp.jlib.core.view.ScrollViewGroup;
 import org.ganjp.jlib.core.view.ScrollViewGroup.PageChangedListener;
 import org.ganjp.jone.R;
-import org.ganjp.jone.common.JpActivity;
+import org.ganjp.jone.common.JOneActivity;
 import org.ganjp.jone.sample.SampleActivity;
 
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class UiScrollViewPagerActivity extends JpActivity {
+public class UiScrollViewPagerActivity extends JOneActivity {
 	private int colors[] = { Color.GREEN, Color.YELLOW, Color.MAGENTA };
 	private PageScrollBar scrollBar;
 	private ScrollViewGroup pagers;

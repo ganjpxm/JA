@@ -2,7 +2,7 @@
  * SplashActivity.java
  *
  * Created by Gan Jianping on 07/09/13.
- * Copyright (c) 2013 DBS. All rights reserved.
+ * Copyright (c) 2013 GANJP. All rights reserved.
  */
 package org.ganjp.jone.common;
 
@@ -18,7 +18,7 @@ import android.os.Bundle;
  * @author Gan Jianping
  * @since 1.0.0
  */
-public class SplashActivity extends JpActivity {
+public class SplashActivity extends JOneActivity {
 	
     private boolean mIsBackButtonPressed; // used to know if the back button was pressed in the splash screen activity and avoid opening the next activity
     
@@ -36,12 +36,12 @@ public class SplashActivity extends JpActivity {
                 
                 // start the Loan Activity if the back button wasn't pressed already 
                 if (!mIsBackButtonPressed) {
-                    Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, HomeFragmentActivity.class);
                     SplashActivity.this.startActivity(intent);
                     transitForward();
                 }
             }
-         }, JpConst.DURATION_SPLASH);
+         }, JOneConst.DURATION_SPLASH);
 	}
 	
 	@Override

@@ -6,12 +6,14 @@
  */
 package org.ganjp.jone.common;
 
-import org.ganjp.jlib.core.BaseFragmentActivity;
+import org.ganjp.jlib.core.BaseActivity;
 import org.ganjp.jone.R;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * <p>Base Activity</p>
@@ -19,7 +21,10 @@ import android.view.MenuItem;
  * @author GanJianping
  *
  */
-public abstract class JpFragmentActivity extends BaseFragmentActivity {
+public abstract class JOneActivity extends BaseActivity {
+	
+	protected Button mBackBtn;
+	protected TextView mTitleTv;
 	
 	/**
 	 * Called when the activity is first created
@@ -28,7 +33,11 @@ public abstract class JpFragmentActivity extends BaseFragmentActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
+		mTitleTv = (TextView)findViewById(R.id.title_tv);
+		mBackBtn = (Button)findViewById(R.id.left_btn);
+		if (mBackBtn!=null) {
+			mBackBtn.setOnClickListener(this);
+		}
 	}
 	
 	/**
@@ -51,7 +60,7 @@ public abstract class JpFragmentActivity extends BaseFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.global_menu_exit :
-				JpActivityManager.getInstance().popAllActivity();
+				JOneActivityManager.getInstance().popAllActivity();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
