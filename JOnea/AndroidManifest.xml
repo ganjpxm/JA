@@ -7,14 +7,14 @@
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="18" />
 
     <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name"
-        android:theme="@style/AppTheme" android:name=".common.JpApplication">
-        <activity android:name="org.ganjp.jone.common.SplashActivity" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
+        android:theme="@style/AppTheme" android:name=".common.JOneApplication">
+        <activity android:name=".common.SplashActivity" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".common.HomeActivity" android:screenOrientation="portrait" android:theme="@style/Theme.Appcompatgreen"/>
+        <activity android:name=".common.HomeFragmentActivity" android:screenOrientation="portrait" android:theme="@style/Theme.Appcompatgreen"/>
         
         <!-- ******************************************************** Sample **************************************** -->
         <activity android:name=".sample.SampleActivity" android:screenOrientation="portrait"/>
