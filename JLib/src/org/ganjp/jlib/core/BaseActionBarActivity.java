@@ -8,7 +8,7 @@ import org.ganjp.jlib.R;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -18,9 +18,9 @@ import android.view.View.OnClickListener;
  * <p>Base Activity</p>
  * 
  * @author GanJianping
- *
+ * @version v1.0.0
  */
-public abstract class BaseFragmentActivity extends FragmentActivity implements OnClickListener {
+public abstract class BaseActionBarActivity extends ActionBarActivity implements OnClickListener {
 	
 	/**
 	 * Called when the activity is first created

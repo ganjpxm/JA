@@ -1,3 +1,9 @@
+/**
+ * ScrollViewGroup.java
+ *
+ * Created by Gan Jianping on 09/09/13.
+ * Copyright (c) 2013 GANJP. All rights reserved.
+ */
 package org.ganjp.jlib.core.view;
 
 import android.content.Context;
@@ -10,6 +16,12 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Scroller;
 
+/**
+ * <p>Scroll View Group</p>
+ * 
+ * @author GanJianping
+ * @since v1.0.0
+ */
 public class ScrollViewGroup extends ViewGroup {
 	private Context mContext;
 

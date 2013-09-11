@@ -2,10 +2,9 @@
  * DialogUtil.java
  *
  * Created by Gan Jianping on 04/9/13.
- * Copyright (c) 2013 GJP. All rights reserved.
+ * Copyright (c) 2013 GANJP. All rights reserved.
  *
  */
-
 package org.ganjp.jlib.core.util;
 
 import org.ganjp.jlib.R;
@@ -25,13 +24,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /**
- * <p>DialogUtil</p>
+ * <p>Dialog Utility</p>
  *
  * @author GanJianping
  * @since 1.0
  */
 public class DialogUtil {
 	
+	public static ProgressDialog sProgressDialog = null;
     /**
      * <p>Show Alert Dialog</p>
      * <pre>
@@ -368,5 +368,37 @@ public class DialogUtil {
 		});
 		dialog.show();
 	}
-
+	
+	/**
+	 * <p>Show Loading Dialog</p>
+	 * 
+	 * @param ctx
+	 */
+	public static void showLoadingDialog(Context ctx) {
+		sProgressDialog = DialogUtil.getProgressDialog(ctx, 0, null, ctx.getString(R.string.loading));
+		sProgressDialog.show();
+    }
+	
+	/**
+	 * <p>Show Loading Dialog</p>
+	 * 
+	 * @param ctx
+	 */
+	public static void showProcessingDialog(Context ctx) {
+		sProgressDialog = DialogUtil.getProgressDialog(ctx, 0, null, ctx.getString(R.string.processing));
+		sProgressDialog.show();
+    }
+	
+	/**
+	 * <p>Show Progress Dialog</p>
+	 * 
+	 * @param ctx
+	 */
+	public static void dismissProgressDialog(Context ctx) {
+		if (sProgressDialog!=null) {
+			sProgressDialog.dismiss();
+			sProgressDialog = null;
+		}
+    }
+	
 }

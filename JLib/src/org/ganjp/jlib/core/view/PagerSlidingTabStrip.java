@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.ganjp.jlib.core.view;
 
 import org.ganjp.jlib.R;
@@ -40,6 +39,12 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * <p>Pager Sliding Tab Strip</p>
+ * 
+ * @author GanJianping
+ * @since v1.0.0
+ */
 public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	// @formatter:off

@@ -1,3 +1,9 @@
+/**
+ * PageScrollBar.java
+ *
+ * Created by Gan Jianping on 09/09/13.
+ * Copyright (c) 2013 GANJP. All rights reserved.
+ */
 package org.ganjp.jlib.core.view;
 
 import android.content.Context;
@@ -8,6 +14,12 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ * <p>Page Scroll Bar</p>
+ * 
+ * @author GanJianping
+ * @since v1.0.0
+ */
 public class PageScrollBar extends View {
 	private int width = 0;
 	private int height = 0;

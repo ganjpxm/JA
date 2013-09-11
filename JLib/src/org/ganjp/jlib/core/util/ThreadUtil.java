@@ -18,7 +18,14 @@ public class ThreadUtil {
 	
 	/**
 	 * <p>Run a thread after durationTime</p>
-	 * 
+	 * <pre>
+	   ThreadUtil.run(new Runnable() {
+       		@Override
+            public void run() {
+                
+            }
+       }, Const.DURATION_SPLASH);
+	 * </pre>
 	 * @param runnable
 	 * @param delayMillis
 	 * @return

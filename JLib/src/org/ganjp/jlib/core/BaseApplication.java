@@ -1,5 +1,5 @@
 /**
- * MainApplication.java
+ * BaseApplication.java
  *
  * Created by Gan Jianping on 08/09/13.
  * Copyright (c) 2013 GANJP. All rights reserved.
@@ -12,7 +12,7 @@ import android.content.res.Configuration;
 import android.provider.Settings;
 
 /**
- * <p>Main Application</p>
+ * <p>Base Application</p>
  * 
  * @author GanJianping
  *

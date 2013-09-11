@@ -1,3 +1,9 @@
+/**
+ * CornerListView.java
+ *
+ * Created by Gan Jianping on 09/09/13.
+ * Copyright (c) 2013 GANJP. All rights reserved.
+ */
 package org.ganjp.jlib.core.view;
 
 import org.ganjp.jlib.R;
@@ -8,6 +14,12 @@ import android.view.MotionEvent;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+/**
+ * <p>Corner List View</p>
+ * 
+ * @author GanJianping
+ * @since v1.0.0
+ */
 public class CornerListView extends ListView {
 	public CornerListView(Context context) {
 		super(context);
