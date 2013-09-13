@@ -4,12 +4,13 @@
  * Created by Gan Jianping on 09/09/13.
  * Copyright (c) 2013 GANJP. All rights reserved.
  */
-package org.ganjp.jone.knowledge;
+package org.ganjp.jone.jweb;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.ganjp.jone.R;
+import org.ganjp.jone.jweb.entity.Item;
 
 import android.content.Context;
 import android.text.Html;
@@ -36,6 +37,8 @@ public class KnowledgeListAdapter extends BaseAdapter {
         TextView titleTv;
         TextView summaryTv;
     }
+	
+	
 	
 	public void addItems(List<Item> items) {
     	mItems.addAll(items);
@@ -91,4 +94,5 @@ public class KnowledgeListAdapter extends BaseAdapter {
         return view;
     }
 
+    
 }

@@ -8,7 +8,7 @@ package org.ganjp.jone.common;
 
 import org.ganjp.jlib.core.view.PagerSlidingTabStrip;
 import org.ganjp.jone.R;
-import org.ganjp.jone.knowledge.KnowledgeFragment;
+import org.ganjp.jone.jweb.KnowledgeFragment;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;

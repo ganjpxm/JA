@@ -4,13 +4,14 @@
  * Created by Gan Jianping on 09/09/13.
  * Copyright (c) 2013 GANJP. All rights reserved.
  */
-package org.ganjp.jone.knowledge;
+package org.ganjp.jone.jweb;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.ganjp.jone.R;
 import org.ganjp.jone.common.JOneConst;
+import org.ganjp.jone.jweb.entity.Item;
 import org.ganjp.jone.sample.SampleActivity;
 
 import android.content.Intent;
@@ -55,7 +56,7 @@ public class KnowledgeFragment extends Fragment implements OnItemClickListener {
 		List<Item> items = new ArrayList<Item>();
 		if (JOneConst.PROGRAM_ANDROID == mKnowledgeCatagoryId) {
 			for (int i=0;i<10;i++) {
-				items.add(new Item("android " + i,"descrption"));
+				items.add(new Item("android ","descrption"));
 			}
 		} else if (JOneConst.PROGRAM_IOS == mKnowledgeCatagoryId) {
 			for (int i=0;i<10;i++) {
