@@ -14,11 +14,6 @@ package org.ganjp.jone.jweb.entity;
  * @since 1.0
  */
 public class BmConfig extends BaseModel{
-	public static final String AUDIO_URL = "AudioUrl";
-	public static final String IMAGE_URL = "ImageUrl";
-	public static final String VIDEO_URL = "VideoUrl";
-	public static final String FILE_URL = "FileUrl";
-
 	private String configId;
 	private String configCd;
 	private String configName;

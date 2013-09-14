@@ -15,6 +15,8 @@ import org.ganjp.jlib.core.dao.DAO;
 import org.ganjp.jlib.core.dao.DatabaseHelper;
 import org.ganjp.jlib.core.util.StringUtil;
 import org.ganjp.jone.common.JOneApplication;
+import org.ganjp.jone.common.JOneConst;
+import org.ganjp.jone.common.PreferenceUtil;
 import org.ganjp.jone.jweb.dao.JWebDaoFactory.DAOType;
 import org.ganjp.jone.jweb.entity.BmConfig;
 
@@ -36,6 +38,7 @@ import android.util.Log;
 public class BmConfigDAO extends DAO {
 	private static final String TAG = "BmConfigDAO"; 
 	private static final String TABLE_NAME = "bm_config"; 
+	
 	
 	// Config Table Columns names
 	public static final String COLUMN_CONFIG_ID = "config_id";
@@ -91,7 +94,7 @@ public class BmConfigDAO extends DAO {
 	 * @return
 	 */
 	public long insertOrUpdate(BmConfig[] bmConfigs) {
-		long latestTime = 0;
+		long latestTime = PreferenceUtil.getLong(JOneConst.KEY_CONFIG_LAST_TIME);
 		for (BmConfig bmConfig : bmConfigs) {
 			ContentValues cv = new ContentValues();
 			cv.put(COLUMN_CONFIG_ID, bmConfig.getConfigId());

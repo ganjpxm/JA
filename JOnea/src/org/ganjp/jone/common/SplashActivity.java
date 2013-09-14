@@ -12,14 +12,15 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.ganjp.jlib.core.Const;
 import org.ganjp.jlib.core.util.HttpConnection;
 import org.ganjp.jone.R;
 import org.ganjp.jone.jweb.dao.BmConfigDAO;
 import org.ganjp.jone.jweb.entity.BmConfig;
+import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,7 +34,6 @@ public class SplashActivity extends JOneActivity {
 	
     private boolean mIsBackButtonPressed; // used to know if the back button was pressed in the splash screen activity and avoid opening the next activity
     ProgressBar progress;
-    String message = "";
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,15 +45,28 @@ public class SplashActivity extends JOneActivity {
 			public void run() {
 				try {
 					HttpConnection h = new HttpConnection(false);
+					
 					ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-					pairs.add(new BasicNameValuePair("os", "android"));
-					h.post("http://192.168.1.103:8080/jp/mobile/getBmConfigs", new UrlEncodedFormEntity(pairs));
-					message = HttpConnection.processEntity(h.getResponse().getEntity());
-					System.out.println(message);
-					Log.e("SplashActivity", message);
-					ObjectMapper mapper = new ObjectMapper();
-					BmConfig[] bmConfigs = mapper.readValue(message, BmConfig[].class);
-					BmConfigDAO.getBmConfigDAO().insertOrUpdate(bmConfigs);
+					pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_CD_OR_EMAIL, JOneConst.VALUE_LOGIN_USER_CD));
+					pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_PASSWORD, JOneConst.VALUE_LOGIN_PASSWORD));
+					h.post(JOneConst.URL_LOGIN, new UrlEncodedFormEntity(pairs));
+					String jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
+					JSONObject datas = new JSONObject(jsonData);
+		            String result = datas.getString(Const.KEY_RESULT);
+		            System.out.println(result);
+		                
+					pairs = new ArrayList<NameValuePair>();
+					pairs.add(new BasicNameValuePair(JOneConst.KEY_CONFIG_CDS, JOneConst.VALUE_CONFIG_TAGS));
+					pairs.add(new BasicNameValuePair(JOneConst.KEY_LAST_TIME, String.valueOf(PreferenceUtil.getLong(JOneConst.KEY_CONFIG_LAST_TIME)) ));
+					h.post(JOneConst.URL_GET_BM_CONFIGS, new UrlEncodedFormEntity(pairs));
+					jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
+					if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
+						ObjectMapper mapper = new ObjectMapper();
+						BmConfig[] bmConfigs = mapper.readValue(jsonData, BmConfig[].class);
+						long lastTime = BmConfigDAO.getBmConfigDAO().insertOrUpdate(bmConfigs);
+						PreferenceUtil.saveLong(JOneConst.KEY_CONFIG_LAST_TIME, lastTime);
+					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
