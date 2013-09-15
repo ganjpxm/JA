@@ -33,7 +33,9 @@ public class JWebDaoFactory {
 	//support two table :system and loan product
 	public enum DAOType {
 		SYSTEM(1), 
-		BM_CONFIG(2);
+		BM_CONFIG(2),
+		CM_ARTICLE(3),
+		CM_PHOTO(4);
 		
 		private int value;
 		DAOType (int value) { 
@@ -118,6 +120,12 @@ public class JWebDaoFactory {
 				case BM_CONFIG:
 					dao = new BmConfigDAO(ctx, mDbHelper);
 					break;	
+				case CM_ARTICLE:
+					dao = new CmArticleDAO(ctx, mDbHelper);
+					break;
+				case CM_PHOTO:
+					dao = new CmPhotoDAO(ctx, mDbHelper);
+					break;
 			}
 			if (dao!=null){ 
 				this.mDaoMaps.put(type, dao);

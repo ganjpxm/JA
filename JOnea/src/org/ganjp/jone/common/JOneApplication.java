@@ -7,6 +7,9 @@
 package org.ganjp.jone.common;
 
 import org.ganjp.jlib.core.BaseApplication;
+import org.ganjp.jlib.core.dao.SystemDAO;
+import org.ganjp.jone.jweb.dao.JWebDaoFactory;
+import org.ganjp.jone.jweb.dao.JWebDaoFactory.DAOType;
 
 
 /**
@@ -17,5 +20,10 @@ import org.ganjp.jlib.core.BaseApplication;
  */
 public class JOneApplication extends BaseApplication {
 	
-	
+	/**
+	 * <p>Get System DAO</p>
+	 */
+	public static SystemDAO getSystemDAO() {
+		return (SystemDAO) (JWebDaoFactory.getInstance().getDAO(DAOType.SYSTEM, JOneApplication.getAppContext()));
+	}
 }	

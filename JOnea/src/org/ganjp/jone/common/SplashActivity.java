@@ -7,20 +7,32 @@
 package org.ganjp.jone.common;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ganjp.jlib.core.Const;
+import org.ganjp.jlib.core.util.DateUtil;
 import org.ganjp.jlib.core.util.HttpConnection;
+import org.ganjp.jlib.core.util.NetworkUtil;
+import org.ganjp.jlib.core.util.StringUtil;
+import org.ganjp.jlib.core.util.ThreadUtil;
 import org.ganjp.jone.R;
 import org.ganjp.jone.jweb.dao.BmConfigDAO;
+import org.ganjp.jone.jweb.dao.CmArticleDAO;
+import org.ganjp.jone.jweb.dao.CmPhotoDAO;
 import org.ganjp.jone.jweb.entity.BmConfig;
+import org.ganjp.jone.jweb.entity.CmArticle;
+import org.ganjp.jone.jweb.entity.CmPhoto;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -41,62 +53,99 @@ public class SplashActivity extends JOneActivity {
 		progress = (ProgressBar) findViewById(R.id.progress);
 		progress.setVisibility(TextView.VISIBLE);
 		
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					HttpConnection h = new HttpConnection(false);
-					
-					ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-					pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_CD_OR_EMAIL, JOneConst.VALUE_LOGIN_USER_CD));
-					pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_PASSWORD, JOneConst.VALUE_LOGIN_PASSWORD));
-					h.post(JOneConst.URL_LOGIN, new UrlEncodedFormEntity(pairs));
-					String jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
-					JSONObject datas = new JSONObject(jsonData);
-		            String result = datas.getString(Const.KEY_RESULT);
-		            System.out.println(result);
-		                
-					pairs = new ArrayList<NameValuePair>();
-					pairs.add(new BasicNameValuePair(JOneConst.KEY_CONFIG_CDS, JOneConst.VALUE_CONFIG_TAGS));
-					pairs.add(new BasicNameValuePair(JOneConst.KEY_LAST_TIME, String.valueOf(PreferenceUtil.getLong(JOneConst.KEY_CONFIG_LAST_TIME)) ));
-					h.post(JOneConst.URL_GET_BM_CONFIGS, new UrlEncodedFormEntity(pairs));
-					jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
-					if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
-						ObjectMapper mapper = new ObjectMapper();
-						BmConfig[] bmConfigs = mapper.readValue(jsonData, BmConfig[].class);
-						long lastTime = BmConfigDAO.getBmConfigDAO().insertOrUpdate(bmConfigs);
-						PreferenceUtil.saveLong(JOneConst.KEY_CONFIG_LAST_TIME, lastTime);
-					}
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				progress.post(new Runnable() {
-					public void run() {
-						finish();
-						if (!mIsBackButtonPressed) {
-		                    Intent intent = new Intent(SplashActivity.this, HomeFragmentActivity.class);
-		                    SplashActivity.this.startActivity(intent);
-		                    transitForward();
-		                }
-					}
-				});
+		//set lang for first time
+		if (StringUtil.isEmpty(PreferenceUtil.getString(JOneConst.KEY_LANG))) {
+			Configuration conf = getResources().getConfiguration();  
+		    String locale = conf.locale.getDisplayName(conf.locale);//English (United States)
+			if (locale.indexOf("中文")!=-1) {
+				PreferenceUtil.saveString(JOneConst.KEY_LANG, JOneConst.LANG_ZH_CN);
+			} else {
+				PreferenceUtil.saveString(JOneConst.KEY_LANG, JOneConst.LANG_EN_SG);
 			}
-		}).start();
-//		// run a thread after 3 seconds to start the Loan Activity
-//		ThreadUtil.run(new Runnable() {
-//            @Override
-//            public void run() {
-//                // make sure we close the splash screen so the user won't come back when it presses back key
-//                finish();
-//                
-//                // start the Loan Activity if the back button wasn't pressed already 
-//                if (!mIsBackButtonPressed) {
-//                    Intent intent = new Intent(SplashActivity.this, HomeFragmentActivity.class);
-//                    SplashActivity.this.startActivity(intent);
-//                    transitForward();
-//                }
-//            }
-//         }, JOneConst.DURATION_SPLASH);
+		}
+		
+		Resources resources = getResources();
+	    Configuration config = resources.getConfiguration();
+	    DisplayMetrics dm = resources.getDisplayMetrics();
+	    String lang = PreferenceUtil.getString(JOneConst.KEY_LANG);
+	    if (lang.equals(JOneConst.LANG_ZH_CN)) {
+			config.locale = Locale.SIMPLIFIED_CHINESE;
+		} else {
+			config.locale = Locale.ENGLISH;
+		}
+	    resources.updateConfiguration(config, dm);
+				
+		if (NetworkUtil.isWifiAvailable(getApplicationContext())) {
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						HttpConnection h = new HttpConnection(false);
+						
+						//login
+						ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+						pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_CD_OR_EMAIL, JOneConst.VALUE_LOGIN_USER_CD));
+						pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_PASSWORD, JOneConst.VALUE_LOGIN_PASSWORD));
+						h.post(JOneConst.URL_LOGIN, new UrlEncodedFormEntity(pairs));
+						String jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
+						JSONObject datas = new JSONObject(jsonData);
+			            String result = datas.getString(Const.KEY_RESULT);
+			            System.out.println(result);
+			            
+			            //get bmConfigs
+						pairs = new ArrayList<NameValuePair>();
+						pairs.add(new BasicNameValuePair(JOneConst.KEY_CONFIG_CDS, JOneConst.VALUE_CONFIG_CDS));
+						pairs.add(new BasicNameValuePair(JOneConst.KEY_LAST_TIME, String.valueOf(PreferenceUtil.getLong(JOneConst.KEY_CONFIG_LAST_TIME)) ));
+						h.post(JOneConst.URL_GET_BM_CONFIGS, new UrlEncodedFormEntity(pairs));
+						jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
+						if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
+							ObjectMapper mapper = new ObjectMapper();
+							BmConfig[] bmConfigs = mapper.readValue(jsonData, BmConfig[].class);
+							long lastTime = BmConfigDAO.getInstance().insertOrUpdate(bmConfigs);
+							PreferenceUtil.saveLong(JOneConst.KEY_CONFIG_LAST_TIME, lastTime);
+						}
+						
+						//get cmArticles
+						pairs = new ArrayList<NameValuePair>();
+						String startDate = DateUtil.getDdMmYYYYHhMmSsFormate(PreferenceUtil.getLong(JOneConst.KEY_ARTICLE_LAST_TIME));
+						pairs.add(new BasicNameValuePair(JOneConst.KEY_START_DATE, startDate));
+						h.post(JOneConst.URL_GET_CM_ARTICLES, new UrlEncodedFormEntity(pairs));
+						jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
+						if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
+							ObjectMapper mapper = new ObjectMapper();
+							CmArticle[] cmArticles = mapper.readValue(jsonData, CmArticle[].class);
+							long lastTime = CmArticleDAO.getInstance().insertOrUpdate(cmArticles);
+							PreferenceUtil.saveLong(JOneConst.KEY_ARTICLE_LAST_TIME, lastTime);
+						}
+						
+						//get cmPhotos
+						pairs = new ArrayList<NameValuePair>();
+						startDate = DateUtil.getDdMmYYYYHhMmSsFormate(PreferenceUtil.getLong(JOneConst.KEY_PHOTO_LAST_TIME));
+						pairs.add(new BasicNameValuePair(JOneConst.KEY_START_DATE, startDate));
+						h.post(JOneConst.URL_GET_CM_PHOTOS, new UrlEncodedFormEntity(pairs));
+						jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
+						if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
+							ObjectMapper mapper = new ObjectMapper();
+							CmPhoto[] cmPhotos = mapper.readValue(jsonData, CmPhoto[].class);
+							long lastTime = CmPhotoDAO.getInstance().insertOrUpdate(cmPhotos);
+							PreferenceUtil.saveLong(JOneConst.KEY_PHOTO_LAST_TIME, lastTime);
+						}
+						forward();
+					} catch (Exception e) {
+						e.printStackTrace();
+						forward();
+					}
+				}
+			}).start();
+		} else {
+			// run a thread after 3 seconds to start the Loan Activity
+			ThreadUtil.run(new Runnable() {
+	            @Override
+	            public void run() {
+	                // start the Loan Activity if the back button wasn't pressed already 
+	                forward();
+	            }
+	         }, Const.DURATION_SPLASH);
+		}
 	}
 	
 	@Override
@@ -105,4 +154,12 @@ public class SplashActivity extends JOneActivity {
 		super.onBackPressed();
 	}
 
+	public void forward() {
+		finish();
+		if (!mIsBackButtonPressed) {
+	        Intent intent = new Intent(SplashActivity.this, HomeFragmentActivity.class);
+	        SplashActivity.this.startActivity(intent);
+	        transitForward();
+	    }
+	}
 }

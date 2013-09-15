@@ -14,20 +14,32 @@ public abstract class JOneConst {
 	public static final String SERVER_IP = "http://192.168.0.100:8080/jp";
 	public static final String URL_LOGIN = SERVER_IP + "/login";
 	public static final String URL_GET_BM_CONFIGS = SERVER_IP + "/mobile/getBmConfigs";
+	public static final String URL_GET_CM_ARTICLES = SERVER_IP + "/mobile/getCmArticles";
+	public static final String URL_GET_CM_PHOTOS = SERVER_IP + "/mobile/getCmPhotos";
+	
+	public static final String LANG_EN_SG = "en_SG";
+	public static final String LANG_ZH_CN = "zh_CN";
 	
 	public static final String KEY_LOGIN_USER_CD_OR_EMAIL = "userCdOrEmail";
 	public static final String KEY_LOGIN_USER_PASSWORD = "userPassword";
 	public static final String KEY_CONFIG_CDS = "configCds";
-	public static final String KEY_CONFIG_LAST_TIME = "bmConfigLastTime";
 	public static final String KEY_LAST_TIME = "lastTime";
+	public static final String KEY_START_DATE = "startDate";
 	public static final String KEY_CONFIG_CD_AUDIO_URL = "AudioUrl";
 	public static final String KEY_CONFIG_CD_IMAGE_URL = "ImageUrl";
-	public static final String KEY_CONFIG_CD_KEY_VIDEO_URL = "VideoUrl";
-	public static final String KEY_CONFIG_CD_KEY_FILE_URL = "FileUrl";
+	public static final String KEY_CONFIG_CD_VIDEO_URL = "VideoUrl";
+	public static final String KEY_CONFIG_CD_FILE_URL = "FileUrl";
+	public static final String KEY_CONFIG_CD_MOBILE_HOME_TAGS = "MobileHomeTags";
+	public static final String KEY_CONFIG_CD_MOBILE_SECTIONS = "MobileSections";
+	
+	public static final String KEY_CONFIG_LAST_TIME = APP_PACKAGE + ".bmConfigLastTime";
+	public static final String KEY_ARTICLE_LAST_TIME = APP_PACKAGE + ".cmArticleLastTime";
+	public static final String KEY_PHOTO_LAST_TIME = APP_PACKAGE + ".cmPhotoLastTime";
+	public static final String KEY_LANG = APP_PACKAGE + ".lang";
 	
 	public static final String VALUE_LOGIN_USER_CD = "mobile";
 	public static final String VALUE_LOGIN_PASSWORD = "1";
-	public static final String VALUE_CONFIG_TAGS = "('AudioUrl','ImageUrl','VideoUrl','FileUrl')";
+	public static final String VALUE_CONFIG_CDS = "('AudioUrl','ImageUrl','VideoUrl','FileUrl','MobileHomeTags')";
 	
 	//----------------------------- Knowledge --------------------------
 	public static final String KNOWLEDGE_CATAGORY_ID = "knowledge_catagory_id";

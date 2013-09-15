@@ -2,7 +2,7 @@
  * BmConfigDAO.java
  * 
  * Created by Gan Jianping on 20/07/13.
- * Copyright (c) 2013 DBS. All rights reserved.
+ * Copyright (c) 2013 GANJP. All rights reserved.
  */
 package org.ganjp.jone.jweb.dao;
 
@@ -80,7 +80,7 @@ public class BmConfigDAO extends DAO {
 			db = this.getDatabase();
 			db.execSQL(createSQL);
 		} catch( Exception ex ) {
-			Log.d("NewsDAO", "createTable:exception:"+ex);
+			Log.d("BmConfigDAO", "createTable:exception:"+ex);
 		} finally {
 			db.close();
 		}
@@ -90,7 +90,7 @@ public class BmConfigDAO extends DAO {
 	 * <p>Insert Or Update a record of Config</p>
 	 * 
 	 * @param values
-	 * @param productId
+	 * @param configId
 	 * @return
 	 */
 	public long insertOrUpdate(BmConfig[] bmConfigs) {
@@ -104,7 +104,7 @@ public class BmConfigDAO extends DAO {
 			cv.put(COLUMN_DESCRIPTION, bmConfig.getDescription());
 			cv.put(Const.COLUMN_LANG, bmConfig.getLang());
 			cv.put(Const.COLUMN_CREATE_TIME, bmConfig.getCreateDateTime().getTime());
-			cv.put(COLUMN_CONFIG_NAME, bmConfig.getModifyTimestamp().getTime());
+			cv.put(Const.COLUMN_MODIFY_TIMESTAMP, bmConfig.getModifyTimestamp().getTime());
 			cv.put(Const.COLUMN_DATA_STATE, bmConfig.getDataState());
 			super.insertOrUpdateWithTime(cv, COLUMN_CONFIG_ID + " = ?", new String[]{bmConfig.getConfigId()});
 			if (latestTime<bmConfig.getModifyTimestamp().getTime()) {
@@ -118,11 +118,11 @@ public class BmConfigDAO extends DAO {
 	 * <p>Insert Or Update a record of Config</p>
 	 * 
 	 * @param values
-	 * @param productId
+	 * @param configId
 	 * @return
 	 */
-	public boolean insertOrUpdate(ContentValues values, String productId) {
-		return super.insertOrUpdateWithTime(values, COLUMN_CONFIG_ID + " = ?", new String[]{productId});
+	public boolean insertOrUpdate(ContentValues values, String configId) {
+		return super.insertOrUpdateWithTime(values, COLUMN_CONFIG_ID + " = ?", new String[]{configId});
 	}
 
 	/**
@@ -200,13 +200,45 @@ public class BmConfigDAO extends DAO {
 	}
 	
 	/**
-	 * <p>Delete table data by productId</p>
+	 * <p>getBmConfig</p>
 	 * 
-	 * @param productId
+	 * @param configCd
+	 * @param lang
 	 * @return
 	 */
-	public boolean deleteByProductId(String productId) {
-		return super.delete(COLUMN_CONFIG_ID + " = ?", new String[]{productId});
+	public BmConfig getBmConfig(String configCd, String lang) {
+		String query = "SELECT * FROM " + TABLE_NAME + " where " + COLUMN_CONFIG_CD + "='" + configCd + "' and " + Const.COLUMN_LANG + "='" + lang + "'";
+		Log.d(TAG, "query:"+query);
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		BmConfig bmConfig = new BmConfig();
+		try {
+			db = this.getDatabase();
+			cursor = db.rawQuery(query, null);
+			if (cursor!=null && cursor.getCount()>0) {
+				cursor.moveToFirst();
+				setBmConfig(bmConfig, cursor);
+			}
+		} catch( Exception ex ) {
+		}finally{
+			if ( cursor!=null ){
+				cursor.close();	
+				cursor = null;
+			}
+			if (db!=null) {
+				db.close();
+			}
+		}
+		return bmConfig;
+	}
+	/**
+	 * <p>Delete table data by configId</p>
+	 * 
+	 * @param configId
+	 * @return
+	 */
+	public boolean deleteByProductId(String configId) {
+		return super.delete(COLUMN_CONFIG_ID + " = ?", new String[]{configId});
 	}
 	
 	/**
@@ -231,7 +263,7 @@ public class BmConfigDAO extends DAO {
 	}
 	
 	/**
-	 * <p>Insert or update column's value base on product id</p>
+	 * <p>Insert or update column's value base on config id</p>
 	 * 
 	 * @param configId
 	 * @param collumnName
@@ -247,7 +279,7 @@ public class BmConfigDAO extends DAO {
 	/**
 	 * <p>Get BmConfig DAO</p>
 	 */
-	public static BmConfigDAO getBmConfigDAO() {
+	public static BmConfigDAO getInstance() {
 		return (BmConfigDAO) (JWebDaoFactory.getInstance().getDAO(DAOType.BM_CONFIG, JOneApplication.getAppContext()));
 	}
 	
