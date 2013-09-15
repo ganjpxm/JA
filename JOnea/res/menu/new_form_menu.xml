@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_new_form"
+          android:icon="@drawable/icon_menu_white"
+          android:title="@string/settings"
+          android:showAsAction="ifRoom|withText">
+        <menu>
+            <item android:id="@+id/form1"
+                  android:icon="@drawable/icon_circle_page_now"
+                  android:title="Form 1"
+                  android:onClick="onSort" />
+            <item android:id="@+id/form2"
+                  android:icon="@drawable/icon_circle_page"
+                  android:title="Form 2"
+                  android:onClick="onSort" />
+        </menu>
+    </item>
+</menu>

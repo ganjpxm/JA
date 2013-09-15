@@ -1,11 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    <!--  
+    <item android:id="@+id/action1" android:title="@string/about" android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/action_share" android:title="@string/share" yourapp:showAsAction="ifRoom" yourapp:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+    <item android:id="@+id/language" android:title="@string/chinese_english" yourapp:showAsAction="ifRoom|withText"/>
+    -->
+    <item android:id="@+id/action_menu" android:title="@string/empty" android:icon="@drawable/icon_menu_white" yourapp:showAsAction="ifRoom">
+        <menu>
+	        <item android:id="@+id/language" android:title="@string/chinese_english" android:icon="@drawable/icon_language" yourapp:showAsAction="ifRoom|withText"/>
+	        <item android:id="@+id/settings" android:title="@string/settings" android:icon="@drawable/icon_settings" yourapp:showAsAction="ifRoom|withText" />
+	        <item android:id="@+id/global_menu_exit" android:title="@string/exit" android:icon="@drawable/icon_signout_gray" yourapp:showAsAction="ifRoom|withText" />
+        </menu>
+    </item>
+</menu>
+<!--  
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
     <item android:id="@+id/global_menu_refresh" android:title="@string/refresh" 
         android:visible="true" android:icon="@drawable/icon_refresh_gray"/>
-    
     <item android:id="@+id/global_menu_exit" android:title="@string/exit" 
         android:visible="true" android:icon="@drawable/icon_signout_gray"/>
-    
     <item android:id="@+id/global_menu_settings" android:title="@string/settings" 
         android:visible="true" android:icon="@drawable/icon_settings" />
 </menu>
+ <item android:id="@+id/action_menu" android:title="@string/empty" android:icon="@drawable/icon_menu_white" yourapp:showAsAction="ifRoom">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/language" android:title="@string/language_en" android:orderInCategory="1" android:showAsAction="never" />
+                <item android:id="@+id/settings" android:title="@string/settings" android:orderInCategory="2" android:showAsAction="never" />
+                <item android:id="@+id/global_menu_exit" android:title="@string/exit" android:orderInCategory="3" android:showAsAction="never"/>
+            </group>
+        </menu>
+    </item>
+-->

@@ -17,4 +17,10 @@
     	<item>Setting:Wi-Fi:Go to Wi-Fi panel;Wi-Fi HotSpot:Create a WI-FI HotSpot(GAN);Alarm Clock:Go to alarm clock panel;</item>
 	</string-array>
 	
+	<string-array name="action_bar_list">  
+	    <item>Home</item> 
+	    <item>Programming</item>  
+	    <item>Application</item> 
+	    <item>Hardware</item>  
+	</string-array>
 </resources>
