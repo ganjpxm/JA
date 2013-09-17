@@ -35,7 +35,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".common.HomeFragmentActivity" android:screenOrientation="portrait" android:theme="@style/Theme.Appcompatgreen"/>
+        <activity android:name=".common.HomeFragmentActivity" android:screenOrientation="portrait" android:launchMode="singleTask"
+            android:theme="@style/Theme.Appcompatgreen"/>
+        <activity android:name=".jweb.ArticleActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar" />
+        
         
         <!-- ******************************************************** Sample **************************************** -->
         <activity android:name=".sample.SampleActivity" android:screenOrientation="portrait"/>
