@@ -16,9 +16,9 @@ package org.ganjp.jlib.core;
 public class Const {
 	//------------------------------ Time -----------------------------
 	public static final int DURATION_SPLASH = 3 * 1000;  // 3 seconds 
-	public static final long TIMEOUT_CONNECT = 20 * 1000; // 10 seconds 
-	public static final long TIMEOUT_SUBMIT_FORM = 2 * 60 * 1000; //2
-	public static final long UPLOAD_TIMEOUT = 20 * 60000;
+	public static final int TIMEOUT_CONNECT = 15 * 1000; // 10 seconds 
+	public static final int TIMEOUT_SUBMIT_FORM = 2 * 60 * 1000; //2
+	public static final int UPLOAD_TIMEOUT = 20 * 60000;
 	public static final long EXPIRED_TIME_FILE = 1 * 24 * 60 * 60000;
 	public static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
 	
@@ -38,14 +38,11 @@ public class Const {
 	public static final String COLUMN_DATA_STATE = "data_state";
 	
 	//----------------------------- Key and value ------------------
-	public static final String FILE_FULL_PATH = "fileFullPath";
-	public static final String STATUS = "status";
-	public static final String STATUS_DONE = "done";
 	public static final short FLAG_YES = 1;
 	public static final short FLAG_NO = 0;
 	public static final short FLAG_ON = 1;
 	public static final short FLAG_OFF = 0;
-	
+	public static final String KEY_RESULT = "result";
 	
 	//---------------------------------------- Network ----------------------------
 	public static final String GOOGLE_DOC_VIEW_URL = "https://docs.google.com/gview?embedded=true&url=";

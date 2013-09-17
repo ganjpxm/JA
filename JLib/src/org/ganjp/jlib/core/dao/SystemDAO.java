@@ -48,7 +48,7 @@ public class SystemDAO extends DAO {
 	 * @param key
 	 * @return
 	 */
-	protected boolean getBooleanValue(String key, boolean isDefault) {
+	public boolean getBooleanValue(String key, boolean isDefault) {
 		String value = getValue(key);
 		if (value == null)
 			return isDefault;
@@ -63,7 +63,7 @@ public class SystemDAO extends DAO {
 	 * @param key
 	 * @return
 	 */
-	protected int getIntegerValue(String key, int defaultValue){
+	public int getIntegerValue(String key, int defaultValue){
 		String value = getValue(key);
 		if(value!=null)
 			return Integer.parseInt(value);
@@ -75,7 +75,7 @@ public class SystemDAO extends DAO {
 	 * @param key
 	 * @param value
 	 */
-	protected void setBooleanValue(String key, boolean value) {
+	public void setBooleanValue(String key, boolean value) {
 		this.addOrUpdateKey(key, value?"true":"false");
 	}
 	
@@ -85,7 +85,7 @@ public class SystemDAO extends DAO {
 	 * @param key
 	 * @param value
 	 */
-	protected void addOrUpdateKey(String key, String value ) {
+	public void addOrUpdateKey(String key, String value ) {
 		ContentValues values = new ContentValues();
 		values.put("key", key);
 		values.put("value", value);
@@ -98,7 +98,7 @@ public class SystemDAO extends DAO {
 	 * @param key
 	 * @return
 	 */
-	protected String getValue(String key) {
+	public String getValue(String key) {
 		String query = "SELECT value FROM system WHERE key = ?";
 		
 		SQLiteDatabase db = null;
@@ -124,4 +124,5 @@ public class SystemDAO extends DAO {
 		}
 		return value;
 	}
+	
 }

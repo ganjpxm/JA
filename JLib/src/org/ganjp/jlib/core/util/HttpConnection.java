@@ -17,6 +17,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.ganjp.jlib.core.Const;
 
 import android.util.Log;
 
@@ -111,7 +112,7 @@ public class HttpConnection extends ConnectionUtil implements Runnable {
 	private void processConn() {
 		setResponseMsg(HttpConnection.RESP_START);
 		handleMessage(HttpConnection.DID_START);
-		HttpConnectionParams.setSoTimeout(httpClient.getParams(), 60000);
+		HttpConnectionParams.setSoTimeout(httpClient.getParams(), Const.TIMEOUT_CONNECT);
 		setResponse(null);
 		int tries = 0;
 		do {
@@ -137,13 +138,13 @@ public class HttpConnection extends ConnectionUtil implements Runnable {
 				}
 				setResponseMsg(HttpConnection.RESP_SUCCEED);
 				handleMessage(HttpConnection.DID_SUCCEED);
-				tries = 3;
+				tries = 1;
 			} catch (Exception e) {
 				Log.w(getClass().toString(), "HttpConnection.processConn()::Exception..." + e.getMessage() + "..." + e.toString() + url);
 				setResponseMsg(HttpConnection.RESP_ERROR + "-" + e.getMessage());
 				handleMessage(HttpConnection.DID_ERROR);
 			}
-		} while (tries != 3);
+		} while (tries != 1);
 	}
 
 	public void run() {
