@@ -4,19 +4,19 @@
     android:background="@color/white">
 
     <RelativeLayout android:id="@+id/item_rl" android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:descendantFocusability="blocksDescendants" android:padding="10dp" >
+        android:descendantFocusability="blocksDescendants" android:padding="5dp" >
 
-        <ImageButton android:id="@+id/item_image_ib" android:layout_width="40dp" android:layout_height="23dp"
+        <ImageView android:id="@+id/item_image_ib" android:layout_width="50dp" android:layout_height="50dp"
             android:layout_alignParentLeft="true" android:layout_centerVertical="true" android:background="#00ffffff"
-            android:paddingLeft="3pt" android:contentDescription="@string/empty" android:visibility="gone">
-        </ImageButton>
+            android:contentDescription="@string/empty" android:visibility="gone">
+        </ImageView>
 
         <TextView android:id="@+id/item_title_tv" android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/item_ib" android:paddingLeft="3pt" android:textColor="@color/black" android:textSize="16sp" >
+            android:layout_toRightOf="@id/item_image_ib" android:paddingLeft="3dp" android:textColor="@color/black" android:textSize="16sp" >
         </TextView>
 
         <TextView android:id="@+id/item_summary_tv" android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_below="@id/item_title_tv" android:layout_toRightOf="@id/item_ib" android:paddingLeft="3pt"
+            android:layout_below="@id/item_title_tv" android:layout_toRightOf="@id/item_image_ib" android:paddingLeft="3pt"
             android:textColor="@color/black" android:textSize="12sp" >
         </TextView>
     </RelativeLayout>
