@@ -94,7 +94,7 @@ public class BmConfigDAO extends DAO {
 	 * @return
 	 */
 	public long insertOrUpdate(BmConfig[] bmConfigs) {
-		long latestTime = PreferenceUtil.getLong(JOneConst.KEY_CONFIG_LAST_TIME);
+		long latestTime = PreferenceUtil.getLong(JOneConst.KEY_PREFERENCE_CONFIG_LAST_TIME);
 		for (BmConfig bmConfig : bmConfigs) {
 			ContentValues cv = new ContentValues();
 			cv.put(COLUMN_CONFIG_ID, bmConfig.getConfigId());

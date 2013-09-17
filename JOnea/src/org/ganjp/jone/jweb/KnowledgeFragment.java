@@ -9,10 +9,13 @@ package org.ganjp.jone.jweb;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ganjp.jlib.core.util.StringUtil;
 import org.ganjp.jone.R;
 import org.ganjp.jone.common.JOneConst;
+import org.ganjp.jone.common.PreferenceUtil;
+import org.ganjp.jone.jweb.dao.CmArticleDAO;
+import org.ganjp.jone.jweb.entity.CmArticle;
 import org.ganjp.jone.jweb.entity.Item;
-import org.ganjp.jone.sample.SampleActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,14 +35,14 @@ import android.widget.ListView;
  */
 public class KnowledgeFragment extends Fragment implements OnItemClickListener {
 
-	private int mKnowledgeCatagoryId = 0;
+	private String tag = "";
 	private ListView mKnowledgeListView = null;
 	private KnowledgeListAdapter mKnowledgeListAdapter = null;
 
-	public static KnowledgeFragment newInstance(int categoryId) {
+	public static KnowledgeFragment newInstance(String tag) {
 		KnowledgeFragment f = new KnowledgeFragment();
 		Bundle b = new Bundle();
-		b.putInt(JOneConst.KNOWLEDGE_CATAGORY_ID, categoryId);
+		b.putString(JOneConst.KEY_TAG, tag);
 		f.setArguments(b);
 		return f;
 	}
@@ -47,41 +50,35 @@ public class KnowledgeFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mKnowledgeCatagoryId = getArguments().getInt(JOneConst.KNOWLEDGE_CATAGORY_ID);
+		tag = getArguments().getString(JOneConst.KEY_TAG);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.knowledge_list_view, container, false);
+		View view = inflater.inflate(R.layout.jweb_list_view, container, false);
 		List<Item> items = new ArrayList<Item>();
-		if (JOneConst.PROGRAM_ANDROID == mKnowledgeCatagoryId) {
-			for (int i=0;i<10;i++) {
-				items.add(new Item("android ","descrption"));
-			}
-		} else if (JOneConst.PROGRAM_IOS == mKnowledgeCatagoryId) {
-			for (int i=0;i<10;i++) {
-				items.add(new Item("ios " + i,"descrption"));
-			}
-		} else if (JOneConst.NEWS_MOBILE_APP == mKnowledgeCatagoryId) {
-			for (int i=0;i<10;i++) {
-				items.add(new Item("mobile app " + i,"descrption"));
+		if (StringUtil.isNotEmpty(tag)) {
+			List<CmArticle> cmArticles = CmArticleDAO.getInstance().getCmArticles(tag, PreferenceUtil.getString(JOneConst.KEY_PREFERENCE_LANG));
+			for (CmArticle cmArticle : cmArticles) {
+				items.add(new Item(cmArticle.getArticleId(), cmArticle.getImageUrl(), cmArticle.getTitle(), cmArticle.getSummary()));
 			}
 		}
-		
 		mKnowledgeListView = (ListView) view.findViewById(R.id.listview);
 		mKnowledgeListAdapter = new KnowledgeListAdapter(getActivity().getApplicationContext(), items);
 		mKnowledgeListView.setAdapter(mKnowledgeListAdapter);
 		mKnowledgeListView.setOnItemClickListener(this);
-	        
 		return view;
 	}
 	
 	@Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent.equals(mKnowledgeListView)) {
-        	if (position==0) {
-        		 Intent intent = new Intent(getActivity(), SampleActivity.class);
-        		 getActivity().startActivity(intent);
+        	Item item = mKnowledgeListAdapter.getItem(position);
+        	if (item!=null) {
+        		Intent intent = new Intent(getActivity(),ArticleActivity.class);
+        		intent.putExtra(JOneConst.KEY_UUID, item.getItemUuid());
+        		getActivity().startActivity(intent);
+        		getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
         	}
         }
     }

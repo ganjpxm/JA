@@ -110,7 +110,7 @@ public class CmArticleDAO extends DAO {
 	 * @return
 	 */
 	public long insertOrUpdate(CmArticle[] cmArticles) {
-		long latestTime = PreferenceUtil.getLong(JOneConst.KEY_ARTICLE_LAST_TIME);
+		long latestTime = PreferenceUtil.getLong(JOneConst.KEY_PREFERENCE_ARTICLE_LAST_TIME);
 		for (CmArticle cmArticle : cmArticles) {
 			ContentValues cv = new ContentValues();
 			
@@ -158,17 +158,43 @@ public class CmArticleDAO extends DAO {
 	 * @return List<CmArticle>
 	 */
 	public List<CmArticle> getCmArticles(String lang) {
+		String sql = "SELECT * FROM " + TABLE_NAME;
+		if (StringUtil.isNotEmpty(lang)) {
+			sql += " where " + Const.COLUMN_LANG + "='" + lang + "'";
+		}
+		return getCmArticlesBySql(sql);
+	}
+	
+	/**
+	 * <p>Get all the cmArticle data</p>
+	 * 
+	 * @return List<CmArticle>
+	 */
+	public List<CmArticle> getCmArticles(String tag, String lang) {
+		String sql = "SELECT * FROM " + TABLE_NAME + " where 1=1 ";
+		if (StringUtil.isNotEmpty(lang)) {
+			sql += " and " + Const.COLUMN_LANG + "='" + lang + "'";
+		}
+		if (StringUtil.isNotEmpty(tag)) {
+			sql += " and " + COLUMN_TAG + " like '%" + tag + "%'";
+		}
+		return getCmArticlesBySql(sql);
+	}
+	
+	/**
+	 * <p>Get CmArticles By Sql</p>
+	 * 
+	 * @param sql
+	 * @return
+	 */
+	private List<CmArticle> getCmArticlesBySql(String sql) {
 		List<CmArticle> cmArticles = new LinkedList<CmArticle>();
 		
-		String query = "SELECT * FROM " + TABLE_NAME;
-		if (StringUtil.isNotEmpty(lang)) {
-			query += " where " + Const.COLUMN_LANG + "='" + lang + "'";
-		}
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = this.getDatabase();
-			cursor = db.rawQuery(query, null);
+			cursor = db.rawQuery(sql, null);
 			if( cursor != null && cursor.getCount() > 0 ) {
 				cursor.moveToFirst();
 
@@ -193,7 +219,6 @@ public class CmArticleDAO extends DAO {
 		}
 		return cmArticles;
 	}
-	
 	/**
 	 * <p>Get a CmArticle object</p>
 	 * 

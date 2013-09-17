@@ -110,7 +110,7 @@ public class CmPhotoDAO extends DAO {
 	 * @return
 	 */
 	public long insertOrUpdate(CmPhoto[] cmPhotos) {
-		long latestTime = PreferenceUtil.getLong(JOneConst.KEY_PHOTO_LAST_TIME);
+		long latestTime = PreferenceUtil.getLong(JOneConst.KEY_PREFERENCE_PHOTO_LAST_TIME);
 		for (CmPhoto cmPhoto : cmPhotos) {
 			ContentValues cv = new ContentValues();
 			

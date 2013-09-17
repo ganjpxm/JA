@@ -6,10 +6,14 @@
  */
 package org.ganjp.jone.jweb;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ganjp.jlib.core.util.ImageUtil;
+import org.ganjp.jlib.core.util.StringUtil;
 import org.ganjp.jone.R;
+import org.ganjp.jone.common.JOneUtil;
 import org.ganjp.jone.jweb.entity.Item;
 
 import android.content.Context;
@@ -32,14 +36,6 @@ public class KnowledgeListAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
     private List<Item> mItems = null;
 
-	class ViewHolder {
-        ImageView imageIv;
-        TextView titleTv;
-        TextView summaryTv;
-    }
-	
-	
-	
 	public void addItems(List<Item> items) {
     	mItems.addAll(items);
         notifyDataSetChanged();
@@ -84,7 +80,13 @@ public class KnowledgeListAdapter extends BaseAdapter {
 	
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-    	View view = inflater.inflate(R.layout.knowledge_list_item, null);
+    	View view = inflater.inflate(R.layout.jweb_list_item, null);
+    	
+    	
+    	ImageView imageIv = (ImageView) view.findViewById(R.id.item_image_ib);
+    	if (StringUtil.isNotEmpty(mItems.get(position).getImagePath())) {
+    		JOneUtil.setImage(imageIv, mItems.get(position).getImagePath());
+    	}
     	
     	TextView itemTitleTv = (TextView) view.findViewById(R.id.item_title_tv);
 		itemTitleTv.setText(Html.fromHtml(mItems.get(position).getTitle()));

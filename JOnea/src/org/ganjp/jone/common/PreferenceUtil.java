@@ -22,6 +22,9 @@ public class PreferenceUtil {
         SharedPreferences.Editor editor = sp.edit();  
         editor.putString(key, value);  
         editor.commit(); 
+//        if (StringUtil.isNotEmpty(getString(key))) {
+//        	editor.remove(key);
+//        }
         return true;
 	}
 	
@@ -47,7 +50,7 @@ public class PreferenceUtil {
 	 * @return
 	 */
 	public static String getString(String key) {
-		SharedPreferences sp = JOneApplication.getAppContext().getSharedPreferences(JOneConst.APP_PACKAGE, Activity.MODE_PRIVATE);  
+		SharedPreferences sp = JOneApplication.getAppContext().getSharedPreferences(JOneConst.APP_PACKAGE, Activity.MODE_PRIVATE); 
         return sp.getString(key, "");
 	}
 	 

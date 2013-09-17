@@ -4,14 +4,15 @@
  */
 package org.ganjp.jone.common;
 
+
 public abstract class JOneConst {
 	//------------------------------ App info -----------------------------
-	public static final String APP_VENDOR = "GANJP";
+	public static final String APP_VENDOR = "JAPP";
 	public static final String APP_PACKAGE = "org.ganjp.jone";
 	public static final String APP_VERSION = "1.0.0";
 	
 	//----------------------------- JWeb -----------------
-	public static final String SERVER_IP = "http://192.168.0.100:8080/jp";
+	public static final String SERVER_IP = "http://192.168.1.101:8080/jp";
 	public static final String URL_LOGIN = SERVER_IP + "/login";
 	public static final String URL_GET_BM_CONFIGS = SERVER_IP + "/mobile/getBmConfigs";
 	public static final String URL_GET_CM_ARTICLES = SERVER_IP + "/mobile/getCmArticles";
@@ -20,6 +21,8 @@ public abstract class JOneConst {
 	public static final String LANG_EN_SG = "en_SG";
 	public static final String LANG_ZH_CN = "zh_CN";
 	
+	public static final String KEY_TAG = "tag";
+	public static final String KEY_UUID = "uuid";
 	public static final String KEY_LOGIN_USER_CD_OR_EMAIL = "userCdOrEmail";
 	public static final String KEY_LOGIN_USER_PASSWORD = "userPassword";
 	public static final String KEY_CONFIG_CDS = "configCds";
@@ -29,20 +32,18 @@ public abstract class JOneConst {
 	public static final String KEY_CONFIG_CD_IMAGE_URL = "ImageUrl";
 	public static final String KEY_CONFIG_CD_VIDEO_URL = "VideoUrl";
 	public static final String KEY_CONFIG_CD_FILE_URL = "FileUrl";
-	public static final String KEY_CONFIG_CD_MOBILE_HOME_TAGS = "MobileHomeTags";
-	public static final String KEY_CONFIG_CD_MOBILE_SECTIONS = "MobileSections";
+	public static final String KEY_CONFIG_CD_MOBILE_TAGS = "MobileTags";
 	
-	public static final String KEY_CONFIG_LAST_TIME = APP_PACKAGE + ".bmConfigLastTime";
-	public static final String KEY_ARTICLE_LAST_TIME = APP_PACKAGE + ".cmArticleLastTime";
-	public static final String KEY_PHOTO_LAST_TIME = APP_PACKAGE + ".cmPhotoLastTime";
-	public static final String KEY_LANG = APP_PACKAGE + ".lang";
+	public static final String KEY_PREFERENCE_CONFIG_LAST_TIME = APP_PACKAGE + ".bmConfigLastTime";
+	public static final String KEY_PREFERENCE_ARTICLE_LAST_TIME = APP_PACKAGE + ".cmArticleLastTime";
+	public static final String KEY_PREFERENCE_PHOTO_LAST_TIME = APP_PACKAGE + ".cmPhotoLastTime";
+	public static final String KEY_PREFERENCE_LANG = APP_PACKAGE + ".lang";
 	
 	public static final String VALUE_LOGIN_USER_CD = "mobile";
 	public static final String VALUE_LOGIN_PASSWORD = "1";
-	public static final String VALUE_CONFIG_CDS = "('AudioUrl','ImageUrl','VideoUrl','FileUrl','MobileHomeTags')";
+	public static final String VALUE_CONFIG_CDS = "('AudioUrl','ImageUrl','VideoUrl','FileUrl','MobileTags')";
 	
 	//----------------------------- Knowledge --------------------------
-	public static final String KNOWLEDGE_CATAGORY_ID = "knowledge_catagory_id";
 	public static final int PROGRAM_ANDROID = 1;
 	public static final int PROGRAM_IOS = 2;
 	public static final int NEWS_MOBILE_APP = 11;

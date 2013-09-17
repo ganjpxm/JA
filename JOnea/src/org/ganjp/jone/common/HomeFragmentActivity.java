@@ -6,13 +6,13 @@
  */
 package org.ganjp.jone.common;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import org.ganjp.jlib.core.util.StringUtil;
 import org.ganjp.jlib.core.view.PagerSlidingTabStrip;
 import org.ganjp.jone.R;
 import org.ganjp.jone.jweb.KnowledgeFragment;
-import org.ganjp.jone.jweb.dao.BmConfigDAO;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -54,9 +54,17 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 
 	private Drawable oldBackground = null;
 	private int currentColor = 0xFF2dcc70;
-
+	
+	private static String sCurrentCategory = "";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		if (JOneUtil.getCategorys().isEmpty()) {
+			JOneUtil.setCategoryTagsValueFromWeb();
+		}
+		if (StringUtil.isEmpty(sCurrentCategory) && JOneUtil.getCategorys()!=null && !JOneUtil.getCategorys().isEmpty()) {
+			sCurrentCategory = JOneUtil.getCategorys().get(0);
+		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.common_activity_home);
 
@@ -65,18 +73,21 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 		actionBar.setTitle(getString(R.string.app_title));
 		actionBar.setSubtitle(getString(R.string.app_sub_title));
 		actionBar.setNavigationMode(actionBar.NAVIGATION_MODE_LIST);
-		SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(this,
-				R.array.action_bar_list,
-				android.R.layout.simple_spinner_dropdown_item);
-		actionBar.setListNavigationCallbacks(spinnerAdapter,
-				new DropDownListener());
-
+		SpinnerAdapter spinnerAdapter = null;
+		if (JOneUtil.getCategorys().isEmpty()) {
+			spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.category_list, android.R.layout.simple_spinner_dropdown_item);
+			JOneUtil.setCategorys(Arrays.asList(getResources().getStringArray(R.array.category_list)));
+			sCurrentCategory = JOneUtil.getCategorys().get(0);
+		} else {
+			spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, JOneUtil.getCategorys());
+		}
+		actionBar.setListNavigationCallbacks(spinnerAdapter, new DropDownListener());
+		actionBar.setSelectedNavigationItem(JOneUtil.getCategorys().indexOf(sCurrentCategory));
+		
 		viewPager = (ViewPager) findViewById(R.id.view_pager);
 		homePageAdapter = new HomePagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(homePageAdapter);
-		final int pageMargin = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
-						.getDisplayMetrics());
+		final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
 		viewPager.setPageMargin(pageMargin);
 
 		pagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.pager_sliding_tab_strip);
@@ -121,8 +132,13 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 	private class DropDownListener implements OnNavigationListener {
 		@Override
 		public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-			// TODO Auto-generated method stub
-			return false;
+			String itemName = JOneUtil.getCategorys().get(itemPosition);
+			if (!sCurrentCategory.equals(itemName)) {
+				sCurrentCategory = itemName;
+				startActivity(getIntent());
+			    transitSlideDown();
+			}
+			return true;
 		}
 	}
 
@@ -169,17 +185,17 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 				Resources resources = getResources();
 			    Configuration config = resources.getConfiguration();
 			    DisplayMetrics dm = resources.getDisplayMetrics();
-			    
-				String lang = PreferenceUtil.getString(JOneConst.KEY_LANG);
+				String lang = PreferenceUtil.getString(JOneConst.KEY_PREFERENCE_LANG);
 				if (lang.equals(JOneConst.LANG_ZH_CN)) {
-					PreferenceUtil.saveString(JOneConst.KEY_LANG, JOneConst.LANG_EN_SG);
+					PreferenceUtil.saveString(JOneConst.KEY_PREFERENCE_LANG, JOneConst.LANG_EN_SG);
 					config.locale = Locale.ENGLISH;
 				} else {
-					PreferenceUtil.saveString(JOneConst.KEY_LANG, JOneConst.LANG_ZH_CN);
+					PreferenceUtil.saveString(JOneConst.KEY_PREFERENCE_LANG, JOneConst.LANG_ZH_CN);
 					config.locale = Locale.SIMPLIFIED_CHINESE;
 				}
 			    resources.updateConfiguration(config, dm);
-			     
+			    JOneUtil.setCategoryTagsValueFromWeb();
+			    sCurrentCategory = "";
 				finish();
 		        startActivity(getIntent());
 		        transitSlideDown();
@@ -190,39 +206,33 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 	}
 	
 	public class HomePagerAdapter extends FragmentPagerAdapter {
-		private String[] homeTabItem = null;
+		private String[] tabItems = null;
 
 		public HomePagerAdapter(FragmentManager fm) {
 			super(fm);
-			String mobileHomeTags = BmConfigDAO.getInstance().getBmConfig(JOneConst.KEY_CONFIG_CD_MOBILE_HOME_TAGS, 
-					PreferenceUtil.getString(JOneConst.KEY_LANG)).getConfigValue();
-			if (StringUtil.isEmpty(mobileHomeTags)) {
-				homeTabItem = new String[] { getString(R.string.menu) };
+			String tags = JOneUtil.getCategoryTagsMap().get(sCurrentCategory);
+			if (StringUtil.isEmpty(tags)) {
+				tabItems = new String[] { getString(R.string.menu) };
 			} else {
-				homeTabItem = mobileHomeTags.split(",");
+				tabItems = tags.split(",");
 			}
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return homeTabItem[position];
+			return tabItems[position];
 		}
 
 		@Override
 		public int getCount() {
-			return homeTabItem.length;
+			return tabItems.length;
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			if (position == 0) {
-				return new MenuFragment();
-			} else if (position == 1) {
-				return KnowledgeFragment.newInstance(JOneConst.PROGRAM_ANDROID);
-			} else if (position == 2) {
-				return KnowledgeFragment.newInstance(JOneConst.PROGRAM_IOS);
-			} else if (position == 3) {
-				return KnowledgeFragment.newInstance(JOneConst.NEWS_MOBILE_APP);
+			String tag = tabItems[position];
+			if (JOneUtil.getTags().indexOf(tag)!=-1) {
+				return KnowledgeFragment.newInstance(tag);
 			} else {
 				return WhiteCardFragment.newInstance(position);
 			}
