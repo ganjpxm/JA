@@ -3,7 +3,7 @@ package org.ganjp.jone.sample.ui;
 import org.ganjp.jlib.core.util.DialogUtil;
 import org.ganjp.jone.R;
 import org.ganjp.jone.common.JOneActivity;
-import org.ganjp.jone.sample.SampleActivity;
+import org.ganjp.jone.sample.SampleFragmentActivity;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -212,7 +212,7 @@ public class UiDialogActivity extends JOneActivity {
     public void onClick(View view) {
     	super.onClick(view);
     	if (view == mBackBtn) {
-    		startActivity(new Intent(this, SampleActivity.class));
+    		startActivity(new Intent(this, SampleFragmentActivity.class));
 		}
     }
 }

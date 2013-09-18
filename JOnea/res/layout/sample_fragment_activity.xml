@@ -1,0 +1,14 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+	
+    <org.ganjp.jlib.core.view.PagerSlidingTabStrip android:id="@+id/pager_sliding_tab_strip" android:layout_width="match_parent"
+        android:layout_height="48dip" android:background="@drawable/style_bg_tabs"/>
+
+    <android.support.v4.view.ViewPager android:id="@+id/view_pager" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="15dp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp" 
+        android:layout_below="@+id/pager_sliding_tab_strip" tools:context=".common.HomeActivity"/>
+
+</RelativeLayout>

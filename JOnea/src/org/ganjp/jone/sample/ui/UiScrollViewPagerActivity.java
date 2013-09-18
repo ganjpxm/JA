@@ -5,7 +5,7 @@ import org.ganjp.jlib.core.view.ScrollViewGroup;
 import org.ganjp.jlib.core.view.ScrollViewGroup.PageChangedListener;
 import org.ganjp.jone.R;
 import org.ganjp.jone.common.JOneActivity;
-import org.ganjp.jone.sample.SampleActivity;
+import org.ganjp.jone.sample.SampleFragmentActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -39,7 +39,7 @@ public class UiScrollViewPagerActivity extends JOneActivity {
 	public void onClick(View view) {
     	super.onClick(view);
     	if (view == mBackBtn) {
-    		startActivity(new Intent(this, SampleActivity.class));
+    		startActivity(new Intent(this, SampleFragmentActivity.class));
 		}
     }
 	public void initComponent() {

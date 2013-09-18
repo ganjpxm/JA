@@ -33,14 +33,14 @@ import android.widget.ListView;
  * @author Gan Jianping
  * @since 1.0.0
  */
-public class KnowledgeFragment extends Fragment implements OnItemClickListener {
+public class ArticleListFragment extends Fragment implements OnItemClickListener {
 
 	private String tag = "";
 	private ListView mKnowledgeListView = null;
-	private KnowledgeListAdapter mKnowledgeListAdapter = null;
+	private ArticleListAdapter mArticleListAdapter = null;
 
-	public static KnowledgeFragment newInstance(String tag) {
-		KnowledgeFragment f = new KnowledgeFragment();
+	public static ArticleListFragment newInstance(String tag) {
+		ArticleListFragment f = new ArticleListFragment();
 		Bundle b = new Bundle();
 		b.putString(JOneConst.KEY_TAG, tag);
 		f.setArguments(b);
@@ -64,8 +64,8 @@ public class KnowledgeFragment extends Fragment implements OnItemClickListener {
 			}
 		}
 		mKnowledgeListView = (ListView) view.findViewById(R.id.listview);
-		mKnowledgeListAdapter = new KnowledgeListAdapter(getActivity().getApplicationContext(), items);
-		mKnowledgeListView.setAdapter(mKnowledgeListAdapter);
+		mArticleListAdapter = new ArticleListAdapter(getActivity().getApplicationContext(), items);
+		mKnowledgeListView.setAdapter(mArticleListAdapter);
 		mKnowledgeListView.setOnItemClickListener(this);
 		return view;
 	}
@@ -73,7 +73,7 @@ public class KnowledgeFragment extends Fragment implements OnItemClickListener {
 	@Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent.equals(mKnowledgeListView)) {
-        	Item item = mKnowledgeListAdapter.getItem(position);
+        	Item item = mArticleListAdapter.getItem(position);
         	if (item!=null) {
         		Intent intent = new Intent(getActivity(),ArticleActivity.class);
         		intent.putExtra(JOneConst.KEY_UUID, item.getItemUuid());

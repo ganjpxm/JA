@@ -47,6 +47,9 @@ public class SplashActivity extends JOneActivity {
 	
 	private boolean mIsBackButtonPressed; // used to know if the back button was pressed in the splash screen activity and avoid opening the next activity
     ProgressBar progress;
+    boolean isTimeout = false;
+    String jsonData = "";
+    
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,78 +80,89 @@ public class SplashActivity extends JOneActivity {
 	    resources.updateConfiguration(config, dm);
 				
 		if (NetworkUtil.isWifiAvailable(getApplicationContext())) {
+			
+			ThreadUtil.run(new Runnable() {
+	       		@Override
+	            public void run() {
+	       			if (StringUtil.isEmpty(jsonData)) {
+	       				isTimeout = true;
+	       				forward();
+	       			}
+	            }
+	    	}, 5*1000);
+			
 			new Thread(new Runnable() {
 				public void run() {
 					try {
-						if (NetworkUtil.connect(JOneConst.SERVER_IP)) {
 							HttpConnection h = new HttpConnection(false);
 							//login
 							ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 							pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_CD_OR_EMAIL, JOneConst.VALUE_LOGIN_USER_CD));
 							pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_PASSWORD, JOneConst.VALUE_LOGIN_PASSWORD));
 							h.post(JOneConst.URL_LOGIN, new UrlEncodedFormEntity(pairs));
-							String jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
-							JSONObject datas = new JSONObject(jsonData);
-				            String result = datas.getString(Const.KEY_RESULT);
-				            System.out.println(result);
-				            //get bmConfigs
-							pairs = new ArrayList<NameValuePair>();
-							pairs.add(new BasicNameValuePair(JOneConst.KEY_CONFIG_CDS, JOneConst.VALUE_CONFIG_CDS));
-							pairs.add(new BasicNameValuePair(JOneConst.KEY_LAST_TIME, String.valueOf(PreferenceUtil.getLong(JOneConst.KEY_PREFERENCE_CONFIG_LAST_TIME)) ));
-							h.post(JOneConst.URL_GET_BM_CONFIGS, new UrlEncodedFormEntity(pairs));
 							jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
-							if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
-								ObjectMapper mapper = new ObjectMapper();
-								BmConfig[] bmConfigs = mapper.readValue(jsonData, BmConfig[].class);
-								long lastTime = BmConfigDAO.getInstance().insertOrUpdate(bmConfigs);
-								PreferenceUtil.saveLong(JOneConst.KEY_PREFERENCE_CONFIG_LAST_TIME, lastTime);
-							}
-							//get cmArticles
-							pairs = new ArrayList<NameValuePair>();
-							String startDate = DateUtil.getDdMmYYYYHhMmSsFormate(PreferenceUtil.getLong(JOneConst.KEY_PREFERENCE_ARTICLE_LAST_TIME));
-							pairs.add(new BasicNameValuePair(JOneConst.KEY_START_DATE, startDate));
-							h.post(JOneConst.URL_GET_CM_ARTICLES, new UrlEncodedFormEntity(pairs));
-							jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
-							if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
-								ObjectMapper mapper = new ObjectMapper();
-								CmArticle[] cmArticles = mapper.readValue(jsonData, CmArticle[].class);
-								long lastTime = CmArticleDAO.getInstance().insertOrUpdate(cmArticles);
-								PreferenceUtil.saveLong(JOneConst.KEY_PREFERENCE_ARTICLE_LAST_TIME, lastTime);
-								for (CmArticle cmArticle : cmArticles) {
-									if (StringUtil.isNotEmpty(cmArticle.getImageUrl()) && cmArticle.getImageUrl().indexOf("/")==-1) {
-										BmConfig bmConfig = BmConfigDAO.getInstance().getBmConfig(JOneConst.KEY_CONFIG_CD_IMAGE_URL, cmArticle.getLang());
-										if (bmConfig!=null && StringUtil.isNotEmpty(bmConfig.getConfigValue())) {
-											String url = bmConfig.getConfigValue() + "/" + cmArticle.getImageUrl();
-											h.get(url);
-											HttpConnection.processFileEntity(h.getResponse().getEntity(), new File(JOneUtil.getPicturesAlbumPath(), cmArticle.getImageUrl()));
+							if (isTimeout==false) { 
+								JSONObject datas = new JSONObject(jsonData);
+					            String result = datas.getString(Const.KEY_RESULT);
+					            System.out.println(result);
+					            //get bmConfigs
+								pairs = new ArrayList<NameValuePair>();
+								pairs.add(new BasicNameValuePair(JOneConst.KEY_CONFIG_CDS, JOneConst.VALUE_CONFIG_CDS));
+								pairs.add(new BasicNameValuePair(JOneConst.KEY_LAST_TIME, String.valueOf(PreferenceUtil.getLong(JOneConst.KEY_PREFERENCE_CONFIG_LAST_TIME)) ));
+								h.post(JOneConst.URL_GET_BM_CONFIGS, new UrlEncodedFormEntity(pairs));
+								jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
+								if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
+									ObjectMapper mapper = new ObjectMapper();
+									BmConfig[] bmConfigs = mapper.readValue(jsonData, BmConfig[].class);
+									long lastTime = BmConfigDAO.getInstance().insertOrUpdate(bmConfigs);
+									PreferenceUtil.saveLong(JOneConst.KEY_PREFERENCE_CONFIG_LAST_TIME, lastTime);
+								}
+								//get cmArticles
+								pairs = new ArrayList<NameValuePair>();
+								String startDate = DateUtil.getDdMmYYYYHhMmSsFormate(PreferenceUtil.getLong(JOneConst.KEY_PREFERENCE_ARTICLE_LAST_TIME));
+								pairs.add(new BasicNameValuePair(JOneConst.KEY_START_DATE, startDate));
+								h.post(JOneConst.URL_GET_CM_ARTICLES, new UrlEncodedFormEntity(pairs));
+								jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
+								if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
+									ObjectMapper mapper = new ObjectMapper();
+									CmArticle[] cmArticles = mapper.readValue(jsonData, CmArticle[].class);
+									long lastTime = CmArticleDAO.getInstance().insertOrUpdate(cmArticles);
+									PreferenceUtil.saveLong(JOneConst.KEY_PREFERENCE_ARTICLE_LAST_TIME, lastTime);
+									for (CmArticle cmArticle : cmArticles) {
+										if (StringUtil.isNotEmpty(cmArticle.getImageUrl()) && cmArticle.getImageUrl().indexOf("/")==-1) {
+											BmConfig bmConfig = BmConfigDAO.getInstance().getBmConfig(JOneConst.KEY_CONFIG_CD_IMAGE_URL, cmArticle.getLang());
+											if (bmConfig!=null && StringUtil.isNotEmpty(bmConfig.getConfigValue())) {
+												String url = bmConfig.getConfigValue() + "/" + cmArticle.getImageUrl();
+												h.get(url);
+												HttpConnection.processFileEntity(h.getResponse().getEntity(), new File(JOneUtil.getPicturesAlbumPath(), cmArticle.getImageUrl()));
+											}
 										}
 									}
 								}
-							}
-							//get cmPhotos
-							pairs = new ArrayList<NameValuePair>();
-							startDate = DateUtil.getDdMmYYYYHhMmSsFormate(PreferenceUtil.getLong(JOneConst.KEY_PREFERENCE_PHOTO_LAST_TIME));
-							pairs.add(new BasicNameValuePair(JOneConst.KEY_START_DATE, startDate));
-							h.post(JOneConst.URL_GET_CM_PHOTOS, new UrlEncodedFormEntity(pairs));
-							jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
-							if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
-								ObjectMapper mapper = new ObjectMapper();
-								CmPhoto[] cmPhotos = mapper.readValue(jsonData, CmPhoto[].class);
-								long lastTime = CmPhotoDAO.getInstance().insertOrUpdate(cmPhotos);
-								PreferenceUtil.saveLong(JOneConst.KEY_PREFERENCE_PHOTO_LAST_TIME, lastTime);
-								for (CmPhoto cmPhoto : cmPhotos) {
-									if (StringUtil.isNotEmpty(cmPhoto.getUrl()) && cmPhoto.getUrl().indexOf("/")==-1) {
-										BmConfig bmConfig = BmConfigDAO.getInstance().getBmConfig(JOneConst.KEY_CONFIG_CD_IMAGE_URL, cmPhoto.getLang());
-										if (bmConfig!=null && StringUtil.isNotEmpty(bmConfig.getConfigValue())) {
-											String url = bmConfig.getConfigValue() + "/" +cmPhoto.getUrl();
-											h.get(url);
-											HttpConnection.processFileEntity(h.getResponse().getEntity(), new File(JOneUtil.getPicturesAlbumPath(), cmPhoto.getUrl()));
+								//get cmPhotos
+								pairs = new ArrayList<NameValuePair>();
+								startDate = DateUtil.getDdMmYYYYHhMmSsFormate(PreferenceUtil.getLong(JOneConst.KEY_PREFERENCE_PHOTO_LAST_TIME));
+								pairs.add(new BasicNameValuePair(JOneConst.KEY_START_DATE, startDate));
+								h.post(JOneConst.URL_GET_CM_PHOTOS, new UrlEncodedFormEntity(pairs));
+								jsonData = HttpConnection.processEntity(h.getResponse().getEntity());
+								if (jsonData.startsWith("[") && !jsonData.equals("[]")) {
+									ObjectMapper mapper = new ObjectMapper();
+									CmPhoto[] cmPhotos = mapper.readValue(jsonData, CmPhoto[].class);
+									long lastTime = CmPhotoDAO.getInstance().insertOrUpdate(cmPhotos);
+									PreferenceUtil.saveLong(JOneConst.KEY_PREFERENCE_PHOTO_LAST_TIME, lastTime);
+									for (CmPhoto cmPhoto : cmPhotos) {
+										if (StringUtil.isNotEmpty(cmPhoto.getUrl()) && cmPhoto.getUrl().indexOf("/")==-1) {
+											BmConfig bmConfig = BmConfigDAO.getInstance().getBmConfig(JOneConst.KEY_CONFIG_CD_IMAGE_URL, cmPhoto.getLang());
+											if (bmConfig!=null && StringUtil.isNotEmpty(bmConfig.getConfigValue())) {
+												String url = bmConfig.getConfigValue() + "/" +cmPhoto.getUrl();
+												h.get(url);
+												HttpConnection.processFileEntity(h.getResponse().getEntity(), new File(JOneUtil.getPicturesAlbumPath(), cmPhoto.getUrl()));
+											}
 										}
 									}
 								}
+								forward();
 							}
-						}
-						forward();
 					} catch (Exception e) {
 						e.printStackTrace();
 						forward();

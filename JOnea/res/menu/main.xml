@@ -7,6 +7,7 @@
     <item android:id="@+id/action_menu" android:title="@string/empty" android:icon="@drawable/icon_menu_white" yourapp:showAsAction="ifRoom">
         <menu>
 	        <item android:id="@+id/language" android:title="@string/chinese_english" android:icon="@drawable/icon_language" yourapp:showAsAction="ifRoom|withText"/>
+	        <item android:id="@+id/sample" android:title="@string/sample" android:icon="@drawable/icon_mobile_black" yourapp:showAsAction="ifRoom|withText" />
 	        <item android:id="@+id/settings" android:title="@string/settings" android:icon="@drawable/icon_settings" yourapp:showAsAction="ifRoom|withText" />
 	        <item android:id="@+id/global_menu_exit" android:title="@string/exit" android:icon="@drawable/icon_signout_gray" yourapp:showAsAction="ifRoom|withText" />
         </menu>

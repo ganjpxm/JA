@@ -31,7 +31,7 @@ import android.widget.TextView;
  * @author Gan Jianping
  * @since 1.0.0
  */
-public class KnowledgeListAdapter extends BaseAdapter {
+public class ArticleListAdapter extends BaseAdapter {
 	
 	private LayoutInflater inflater;
     private List<Item> mItems = null;
@@ -41,13 +41,13 @@ public class KnowledgeListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 	 
-	public KnowledgeListAdapter(Context context) {
+	public ArticleListAdapter(Context context) {
         super();
         this.inflater = LayoutInflater.from(context);
         mItems = new ArrayList<Item>();
     }
 	
-	public KnowledgeListAdapter(Context context, List<Item> items) {
+	public ArticleListAdapter(Context context, List<Item> items) {
         super();
         this.inflater = LayoutInflater.from(context);
         mItems = items;

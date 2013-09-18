@@ -12,8 +12,10 @@ import java.util.Locale;
 import org.ganjp.jlib.core.util.StringUtil;
 import org.ganjp.jlib.core.view.PagerSlidingTabStrip;
 import org.ganjp.jone.R;
-import org.ganjp.jone.jweb.KnowledgeFragment;
+import org.ganjp.jone.jweb.ArticleListFragment;
+import org.ganjp.jone.sample.SampleFragmentActivity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
@@ -126,7 +128,6 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 	public void onColorClicked(View v) {
 		int color = ((ColorDrawable) v.getBackground()).getColor();
 		changeColor(color);
-
 	}
 
 	private class DropDownListener implements OnNavigationListener {
@@ -135,8 +136,9 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 			String itemName = JOneUtil.getCategorys().get(itemPosition);
 			if (!sCurrentCategory.equals(itemName)) {
 				sCurrentCategory = itemName;
-				startActivity(getIntent());
-			    transitSlideDown();
+				homePageAdapter = new HomePagerAdapter(getSupportFragmentManager());
+				viewPager.setAdapter(homePageAdapter);
+				pagerSlidingTabStrip.setViewPager(viewPager);
 			}
 			return true;
 		}
@@ -200,6 +202,11 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 		        startActivity(getIntent());
 		        transitSlideDown();
 				return true;
+			case R.id.sample :
+				Intent intent = new Intent(HomeFragmentActivity.this, SampleFragmentActivity.class);
+		        startActivity(intent);
+		        transitForward();
+			    return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -232,7 +239,7 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 		public Fragment getItem(int position) {
 			String tag = tabItems[position];
 			if (JOneUtil.getTags().indexOf(tag)!=-1) {
-				return KnowledgeFragment.newInstance(tag);
+				return ArticleListFragment.newInstance(tag);
 			} else {
 				return WhiteCardFragment.newInstance(position);
 			}

@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="home_tab_items">
-    	<item>HOME</item>
-    	<item>ANDROID</item>
-    	<item>IPHONE</item>
-    	<item>MOBILE APP</item>
-	</string-array>
-	
-	<string-array name="menu_items">
-    	<item>Sample:Android:User Interface,Media and Camera, Loaction and Sensors;
-    	    Jquery Mobile:Collapsibles,Controlgroups,Listviews,Navigation,Panels,Popups,Responsive Tables,Sliders,Swipe;
-    	    Sencha Touch:User Interface,Animations,Touch Events,Data,Media,Themes,Graphics;</item>
-    	<item>Program:Android:Compatibility,Supporting Multiple Screens,Supporting Tablets and Handsets;
-    	    iOS:Audio &#38; Video,Data Management,General,Networking &#38; Internet;</item>
-    	<item>News:Mobile Phone:iPhone 5,Samsung Galaxy S4,HTC ONE,XiaoMi 2S;Mobile App:Facebook,Path,Twitter,Wechat;</item>
-    	<item>Setting:Wi-Fi:Go to Wi-Fi panel;Wi-Fi HotSpot:Create a WI-FI HotSpot(GAN);Alarm Clock:Go to alarm clock panel;</item>
-	</string-array>
-	
 	<string-array name="category_list">  
 	    <item>Home</item> 
 	    <item>Programming</item>  
 	    <item>Application</item> 
 	    <item>Hardware</item>  
+	</string-array>
+	
+	<string-array name="sample_tab_items">
+    	<item>ANDROID</item>
+    	<item>JQUERY MOBILE</item>
+    	<item>SENCHA TOUCH</item>
+    	<item>KENDO MOBILE</item>
+	</string-array>
+	
+	<string-array name="sample_android_menu_items">
+	    <item>User Interface:Layouts:description;Input Controls;Menus;Action Bar;Settings;Dialogs;Scroll View;</item>
+    	<item>Connectivity:Bluetooth:description;NFC;Wi-Fi P2P;USB;SIP;</item>
+	</string-array>
+	
+	<string-array name="sample_jquery_mobile_menu_items">
+	    <item>Collapibles:Dynamic collapsible:description;</item>
+    	<item>Controlgroups:Dynamic controlgroup:description;</item>
+    	<item>Listviews:Grid Listview:description;Autodividers Linkbar;Autodividers Selector;</item>
+	</string-array>
+	
+	<string-array name="sample_sencha_touch_menu_items">
+	    <item>User Interface:Buttons:description;Forms;DataViews;Lists;Nested List;</item>
+    	<item>Animations:Slide:description;Fade;Cover;</item>
+	</string-array>
+	
+	<string-array name="sample_kendo_mobile_menu_items">
+	    <item>User Interface:Buttons:description;ButtonGroup;ListView;</item>
+    	<item>Animations:Touch Events:description;</item>
 	</string-array>
 </resources>
