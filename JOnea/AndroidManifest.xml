@@ -28,8 +28,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     
     <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name"
-        android:theme="@style/AppTheme" android:name=".common.JOneApplication">
-        <activity android:name=".common.SplashActivity" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
+        android:name=".common.JOneApplication" android:theme="@android:style/Theme.NoTitleBar">
+        <activity android:name=".common.SplashActivity" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,11 +37,13 @@
         </activity>
         <activity android:name=".common.HomeFragmentActivity" android:screenOrientation="portrait" android:launchMode="singleTask"
             android:theme="@style/Theme.Appcompatgreen"/>
-        <activity android:name=".jweb.ArticleActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name=".jweb.ArticleActivity" android:screenOrientation="fullSensor" android:theme="@android:style/Theme.NoTitleBar"/>
         
         
         <!-- ******************************************************** Sample **************************************** -->
         <activity android:name=".sample.SampleActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".sample.SampleFragmentActivity" android:screenOrientation="portrait" android:launchMode="singleTask"
+            android:theme="@style/Theme.Appcompatgreen"/>
         <!-- Ui -->
         <activity android:name=".sample.ui.UiScrollViewPagerActivity"/>
         <activity android:name=".sample.ui.UiDialogActivity"/>
