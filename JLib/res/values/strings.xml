@@ -6,7 +6,9 @@
     <string name="ok">OK</string>
     <string name="call">Call</string>
     <string name="alert">Alert</string>
-    <string name="loading">Loading...</string>
-    <string name="processing">Processing...</string>
-    
+    <string name="loading">Loading&#8230;</string>
+    <string name="processing">Processing&#8230;</string>
+    <string name="loading_timeout"><![CDATA[Connection time out. Please try again later.<br/> Sorry for the inconvenience caused.]]></string>
+	<string name="error_connect"><![CDATA[Unable to connect to server. Please try again later.<br/> Sorry for the inconvenience caused.]]></string>
+	<string name="no_network"><![CDATA[Unable to detect a connection to the internet. Please check your phone settings.]]></string>
 </resources>
