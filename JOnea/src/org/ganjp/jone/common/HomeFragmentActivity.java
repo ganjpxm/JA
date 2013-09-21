@@ -6,10 +6,17 @@
  */
 package org.ganjp.jone.common;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.ganjp.jlib.core.util.DialogUtil;
+import org.ganjp.jlib.core.util.HttpConnection;
 import org.ganjp.jlib.core.util.StringUtil;
+import org.ganjp.jlib.core.util.ThreadUtil;
 import org.ganjp.jlib.core.view.PagerSlidingTabStrip;
 import org.ganjp.jone.R;
 import org.ganjp.jone.jweb.ArticleListFragment;
@@ -59,6 +66,8 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 	
 	private static String sCurrentCategory = "";
 	
+	boolean isTimeout = false;
+    String jsonData = "";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		if (JOneUtil.getCategorys().isEmpty()) {
@@ -207,6 +216,42 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 		        startActivity(intent);
 		        transitForward();
 			    return true;
+			case R.id.sync :
+				DialogUtil.showMessageDialog(this, getString(R.string.syncing));
+				ThreadUtil.run(new Runnable() {
+		       		@Override
+		            public void run() {
+		       			if (StringUtil.isEmpty(jsonData)) {
+		       				isTimeout = true;
+		       				DialogUtil.dismissProgressDialog();
+		       				showToastFromBackground(JOneConst.TIMEOUT);
+		       			}
+		            }
+		    	}, 15*1000);
+				
+				new Thread (new Runnable() {
+					public void run() {
+						try {
+							HttpConnection httpConnection = new HttpConnection(false);
+							//login
+							ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+							pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_CD_OR_EMAIL, JOneConst.VALUE_LOGIN_USER_CD));
+							pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_PASSWORD, JOneConst.VALUE_LOGIN_PASSWORD));
+							httpConnection.post(JOneConst.URL_LOGIN, new UrlEncodedFormEntity(pairs));
+							jsonData = HttpConnection.processEntity(httpConnection.getResponse().getEntity());
+							if (isTimeout==false) { 
+								JOneUtil.getDataFromJWeb(httpConnection, false);
+								DialogUtil.dismissProgressDialog();
+								showToastFromBackground(JOneConst.SUCCESS);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							DialogUtil.dismissProgressDialog();
+							showToastFromBackground(JOneConst.FAIL);
+						}	
+					}
+				}).start();
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -245,5 +290,5 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 			}
 		}
 	}
-
+	
 }

@@ -75,7 +75,7 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
         if (parent.equals(mKnowledgeListView)) {
         	Item item = mArticleListAdapter.getItem(position);
         	if (item!=null) {
-        		Intent intent = new Intent(getActivity(),ArticleActivity.class);
+        		Intent intent = new Intent(getActivity(), AticleScrollViewActivity.class);
         		intent.putExtra(JOneConst.KEY_UUID, item.getItemUuid());
         		getActivity().startActivity(intent);
         		getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);

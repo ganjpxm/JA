@@ -85,7 +85,7 @@ public class ArticleListAdapter extends BaseAdapter {
     	
     	ImageView imageIv = (ImageView) view.findViewById(R.id.item_image_ib);
     	if (StringUtil.isNotEmpty(mItems.get(position).getImagePath())) {
-    		JOneUtil.setImage(imageIv, mItems.get(position).getImagePath());
+    		JOneUtil.setImageSmall(imageIv, mItems.get(position).getImagePath());
     	}
     	
     	TextView itemTitleTv = (TextView) view.findViewById(R.id.item_title_tv);

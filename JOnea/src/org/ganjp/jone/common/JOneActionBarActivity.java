@@ -12,6 +12,7 @@ import org.ganjp.jone.R;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 /**
  * <p>Base Fragment Activity support android 2.2+</p>
@@ -56,4 +57,19 @@ public abstract class JOneActionBarActivity extends BaseActionBarActivity {
 				return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	public void showToastFromBackground(final String message) {
+    	runOnUiThread(new Runnable() {
+	        @Override
+	        public void run() {
+	        	if (message.equals(JOneConst.FAIL)) {
+					Toast.makeText(JOneApplication.getAppContext(), JOneApplication.getAppContext().getString(R.string.fail), Toast.LENGTH_SHORT).show();
+				} else if (message.equals(JOneConst.SUCCESS)) {
+					Toast.makeText(JOneApplication.getAppContext(), JOneApplication.getAppContext().getString(R.string.success), Toast.LENGTH_SHORT).show();
+				} else if (message.equals(JOneConst.TIMEOUT)) {
+					Toast.makeText(JOneApplication.getAppContext(), JOneApplication.getAppContext().getString(R.string.timeout), Toast.LENGTH_SHORT).show();
+				}
+	        }
+    	});
+    }
 }	

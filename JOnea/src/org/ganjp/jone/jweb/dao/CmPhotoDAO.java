@@ -13,6 +13,7 @@ import java.util.List;
 import org.ganjp.jlib.core.Const;
 import org.ganjp.jlib.core.dao.DAO;
 import org.ganjp.jlib.core.dao.DatabaseHelper;
+import org.ganjp.jlib.core.util.DateUtil;
 import org.ganjp.jlib.core.util.StringUtil;
 import org.ganjp.jone.common.JOneApplication;
 import org.ganjp.jone.common.JOneConst;
@@ -135,6 +136,9 @@ public class CmPhotoDAO extends DAO {
 			super.insertOrUpdateWithTime(cv, COLUMN_PHOTO_ID + " = ?", new String[]{cmPhoto.getPhotoId()});
 			if (latestTime<cmPhoto.getModifyTimestamp().getTime()) {
 				latestTime = cmPhoto.getModifyTimestamp().getTime();
+				String date = DateUtil.getDdMmYYYYHhMmSsFormate(latestTime);
+				System.out.println(date);
+				System.out.println(DateUtil.getNowYyyyMmDmHhMmSs());
 			}
 		}
 		return latestTime;
@@ -156,25 +160,30 @@ public class CmPhotoDAO extends DAO {
 	 * 
 	 * @return List<CmPhoto>
 	 */
-	public List<CmPhoto> getCmPhotos(String lang) {
-		List<CmPhoto> cmPhotos = new LinkedList<CmPhoto>();
-		
-		String query = "SELECT * FROM " + TABLE_NAME;
-		if (StringUtil.isNotEmpty(lang)) {
-			query += " where " + Const.COLUMN_LANG + "='" + lang + "'";
+	public List<CmPhoto> getCmPhotos(String refArticleId, String lang) {
+		String sql = "SELECT * FROM " + TABLE_NAME + " where 1=1 ";
+		if (StringUtil.isNotEmpty(refArticleId)) {
+			sql += " and " + COLUMN_REF_ARTICLE_ID + "='" + refArticleId + "'";
 		}
+		if (StringUtil.isNotEmpty(lang)) {
+			sql += " and " + Const.COLUMN_LANG + "='" + lang + "'";
+		}
+		sql += " order by " + COLUMN_DISPLAY_NO;
+		return getCmPhotosBySql(sql);
+	}
+	
+	public List<CmPhoto> getCmPhotosBySql(String sql) {
+		List<CmPhoto> cmPhotos = new LinkedList<CmPhoto>();
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = this.getDatabase();
-			cursor = db.rawQuery(query, null);
+			cursor = db.rawQuery(sql, null);
 			if( cursor != null && cursor.getCount() > 0 ) {
 				cursor.moveToFirst();
-
 				while(cursor.isAfterLast()==false) {
 					CmPhoto cmPhoto = new CmPhoto();
 					setCmPhoto(cmPhoto, cursor);
-					
 					cmPhotos.add(cmPhoto);
 					cursor.moveToNext();
 				}
@@ -192,7 +201,6 @@ public class CmPhotoDAO extends DAO {
 		}
 		return cmPhotos;
 	}
-	
 	/**
 	 * <p>Get a CmPhoto object</p>
 	 * 
