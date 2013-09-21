@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:background="@color/white"
+    android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" android:padding="5dp">
+	<ImageView android:id="@+id/photo_iv" android:layout_width="fill_parent" android:layout_height="fill_parent"
+           android:layout_gravity="center_horizontal" android:contentDescription="@string/empty" />
+        	
+ 	<WebView android:id="@+id/web_view" android:layout_height="100dp" android:layout_width="fill_parent" android:background="@color/white"
+ 	    android:scrollbarSize="10dp" android:layout_marginTop="10dp"/>
+ 	
+</LinearLayout>
+<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/activity" android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@color/white">
+
+ 	<ImageView android:id="@+id/photo_iv" android:layout_width="fill_parent" android:layout_height="fill_parent"
+           android:layout_gravity="center_horizontal" android:contentDescription="@string/empty">
+    </ImageView>
+        	
+ 	<WebView android:id="@+id/web_view" android:layout_height="100dp" android:layout_width="fill_parent" android:background="@color/white"
+ 	    android:layout_below="@id/photo_iv"  android:layout_alignParentBottom="true" android:scrollbarSize="10dp" />
+ 	
+</RelativeLayout> -->

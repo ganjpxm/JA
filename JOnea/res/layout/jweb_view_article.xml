@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/activity" android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@color/white">
+
+ 	<ScrollView android:id="@+id/scroll_view" android:layout_width="match_parent" android:layout_height="match_parent" >
+	 	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" android:padding="10dp">
+	 	    <TextView android:id="@+id/title_tv"  android:layout_width="wrap_content" android:layout_height="wrap_content" 
+	 	        android:layout_gravity="center_horizontal" android:text="@string/empty" android:textColor="@color/black" android:layout_margin="5dp"
+		        android:textAppearance="?android:attr/textAppearanceLarge" />
+	 	    <ImageView android:id="@+id/cover_iv" android:layout_width="fill_parent" android:layout_height="200dp"
+	            android:layout_gravity="center_horizontal" android:background="#00ffffff" android:layout_marginRight="10dp"
+	            android:contentDescription="@string/empty" android:visibility="gone" >
+	       	</ImageView>
+	       	<WebView android:id="@+id/article_wv" android:layout_height="wrap_content" android:layout_width="match_parent" android:background="@color/white"
+		 		android:layout_below="@id/header" android:layout_above="@+id/bottom_panel_rl" android:scrollbarSize="10dp"/>
+	       	<TextView android:id="@+id/more_tv"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold"
+	 	        android:layout_gravity="right" android:text="@string/more" android:textColor="@color/green" 
+	 	        android:layout_marginTop="5dp" android:layout_marginRight="25dp" android:layout_marginBottom="15dp"/>
+	 	</LinearLayout>
+ 	</ScrollView>
+ 	
+</RelativeLayout>

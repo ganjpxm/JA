@@ -6,6 +6,9 @@
     <!-- ****************************************** Home **************************************************-->
     <string name="home">HOME</string>
     
+    <!-- ****************************************** JWeb **************************************************-->
+    <string name="article">Article</string>
+    
 	<!-- ****************************************** Sample **************************************************-->
 	<!-- ****** Ui ******* -->
 	<!-- Dialog -->
@@ -55,4 +58,9 @@
 	<string name="share">Share</string>
 	<string name="menu">Menu</string>
 	<string name="chinese_english">中文／English</string>
+	<string name="sync">Sync</string>
+	<string name="success">Success</string>
+	<string name="fail">Fail</string>
+	<string name="timeout">Timeout</string>
+	<string name="syncing">Sync&#8230;</string>
 </resources>

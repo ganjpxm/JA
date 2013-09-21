@@ -24,5 +24,10 @@
 	<string name="btn_switch_language">English</string>
 	<string name="share">共享</string>
 	<string name="menu">菜单</string>
+	<string name="sync">同步</string>
+	<string name="success">成功</string>
+	<string name="fail">失败</string>
+	<string name="timeout">超时</string>
+	<string name="syncing">同步中&#8230;</string>
     
 </resources>
