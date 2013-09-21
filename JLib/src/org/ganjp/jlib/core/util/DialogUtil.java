@@ -390,11 +390,22 @@ public class DialogUtil {
     }
 	
 	/**
+	 * <p>Show Syncing Dialog</p>
+	 * 
+	 * @param ctx
+	 * @param message
+	 */
+	public static void showMessageDialog(Context ctx, String message) {
+		sProgressDialog = DialogUtil.getProgressDialog(ctx, 0, null, message);
+		sProgressDialog.show();
+    }
+	
+	/**
 	 * <p>Show Progress Dialog</p>
 	 * 
 	 * @param ctx
 	 */
-	public static void dismissProgressDialog(Context ctx) {
+	public static void dismissProgressDialog() {
 		if (sProgressDialog!=null) {
 			sProgressDialog.dismiss();
 			sProgressDialog = null;

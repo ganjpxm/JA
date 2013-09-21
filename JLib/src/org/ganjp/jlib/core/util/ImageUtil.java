@@ -33,11 +33,26 @@ public class ImageUtil {
 	 * @param imageView
 	 * @param imagePath
 	 */
-	public static void setImg(ImageView imageView, String imagePath) {
+	public static void setImgSmall(ImageView imageView, String imagePath) {
 		File imgFile = new File(imagePath);
 		if(imgFile.exists()){
             BitmapFactory.Options options = new BitmapFactory.Options(); 
             options.inSampleSize = 8; 
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options); 
+            imageView.setImageBitmap(bitmap);
+		}
+	}
+	
+	/**
+	 * <p>Set image to imageView</p>
+	 * 
+	 * @param imageView
+	 * @param imagePath
+	 */
+	public static void setImgNormal(ImageView imageView, String imagePath) {
+		File imgFile = new File(imagePath);
+		if(imgFile.exists()){
+            BitmapFactory.Options options = new BitmapFactory.Options(); 
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options); 
             imageView.setImageBitmap(bitmap);
 		}

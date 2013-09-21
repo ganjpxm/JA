@@ -198,10 +198,11 @@ public class NetworkUtil {
 
 	    // Prepare a request object
 	    HttpGet httpget = new HttpGet(url); 
-
+	    
 	    // Execute the request
 	    HttpResponse response;
 	    try {
+	    	
 	        response = httpclient.execute(httpget);
 	        // Examine the response status
 	        Log.i("Praeda",response.getStatusLine().toString());

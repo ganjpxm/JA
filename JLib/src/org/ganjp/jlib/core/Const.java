@@ -15,7 +15,7 @@ package org.ganjp.jlib.core;
  */
 public class Const {
 	//------------------------------ Time -----------------------------
-	public static final int DURATION_SPLASH = 3 * 1000;  // 3 seconds 
+	public static final int DURATION_SPLASH = 2 * 1000;  // 2 seconds 
 	public static final int TIMEOUT_CONNECT = 15 * 1000; // 10 seconds 
 	public static final int TIMEOUT_SUBMIT_FORM = 2 * 60 * 1000; //2
 	public static final int UPLOAD_TIMEOUT = 20 * 60000;
