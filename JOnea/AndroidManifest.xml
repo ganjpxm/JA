@@ -37,16 +37,30 @@
         </activity>
         <activity android:name=".common.HomeFragmentActivity" android:screenOrientation="portrait" android:launchMode="singleTask"
             android:theme="@style/Theme.Appcompatgreen"/>
-        <activity android:name=".jweb.ArticleActivity" android:screenOrientation="fullSensor" android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".common.BrowserActivity"/>
         
+        <!-- ******************************************************** JWeb **************************************** -->
+        <activity android:name=".jweb.ArticleActivity" android:screenOrientation="fullSensor" android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".jweb.AticleScrollViewActivity" android:screenOrientation="fullSensor" android:hardwareAccelerated="false"  
+            android:theme="@android:style/Theme.NoTitleBar"/>
         
         <!-- ******************************************************** Sample **************************************** -->
         <activity android:name=".sample.SampleActivity" android:screenOrientation="portrait"/>
         <activity android:name=".sample.SampleFragmentActivity" android:screenOrientation="portrait" android:launchMode="singleTask"
-            android:theme="@style/Theme.Appcompatgreen"/>
+            android:theme="@style/Theme.Appcompatgreen" />
         <!-- Ui -->
         <activity android:name=".sample.ui.UiScrollViewPagerActivity"/>
         <activity android:name=".sample.ui.UiDialogActivity"/>
+        
+        <!-- ******************************************************** Vudroid **************************************** -->
+        <activity android:name="org.ganjp.jone.sample.thirdparty.VudroidPdfActivity" android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:mimeType="application/pdf"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
