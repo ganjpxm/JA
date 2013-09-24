@@ -26,6 +26,8 @@ public abstract class JOneConst {
 	public static final String TIMEOUT = "timeout";
 	
 	public static final String KEY_TAG = "tag";
+	public static final String KEY_TITLE = "title";
+	public static final String KEY_URL = "url";
 	public static final String KEY_UUID = "uuid";
 	public static final String KEY_MESSAGE = "message";
 	public static final String KEY_LOGIN_USER_CD_OR_EMAIL = "userCdOrEmail";

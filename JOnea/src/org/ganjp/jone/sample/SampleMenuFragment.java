@@ -1,14 +1,19 @@
 package org.ganjp.jone.sample;
 
+import java.io.File;
+
 import org.ganjp.jlib.core.util.StringUtil;
 import org.ganjp.jone.R;
+import org.ganjp.jone.common.BrowserActivity;
 import org.ganjp.jone.common.JOneApplication;
 import org.ganjp.jone.common.JOneConst;
 import org.ganjp.jone.common.MenuListAdapter;
+import org.ganjp.jone.sample.thirdparty.VudroidPdfActivity;
 import org.ganjp.jone.sample.ui.UiDialogActivity;
 import org.ganjp.jone.sample.ui.UiScrollViewPagerActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -67,12 +72,34 @@ public class SampleMenuFragment extends Fragment implements OnItemClickListener 
 		String item = mMenuListAdapter.getTitle(position);
         if (StringUtil.isNotEmpty(item)) {
         	item = item.toLowerCase();
-        	if (item.indexOf("dialog")!=-1) {
-        		getActivity().startActivity(new Intent(getActivity(), UiDialogActivity.class));
-        	} else if (item.indexOf("scroll view")!=-1){
-        		getActivity().startActivity(new Intent(getActivity(), UiScrollViewPagerActivity.class));
-        	}
-        	getActivity().overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+        	if (tag.indexOf("android")!=-1) {
+        		if (item.indexOf("dialog")!=-1) {
+            		getActivity().startActivity(new Intent(getActivity(), UiDialogActivity.class));
+            	} else if (item.indexOf("scroll view")!=-1){
+            		getActivity().startActivity(new Intent(getActivity(), UiScrollViewPagerActivity.class));
+            	} else if (item.indexOf("vudroid")!=-1){
+            		 File file = new File("/mnt/sdcard/tnc.pdf"); 
+            		 Uri pdfUri = Uri.fromFile(file); 
+            		final Intent intent = new Intent(Intent.ACTION_VIEW, pdfUri);
+                    intent.setClass(getActivity(), VudroidPdfActivity.class);
+                    startActivity(intent);
+            	}
+        		
+    		} else if (tag.indexOf("jquery")!=-1) {
+    			
+    		} else if (tag.indexOf("sencha")!=-1) {
+    			
+    		} else if (tag.indexOf("kendo")!=-1) {
+    			Intent intent = new Intent(getActivity(), BrowserActivity.class);
+    			intent.putExtra(JOneConst.KEY_TITLE, "Kendo Mobile");
+    			if (item.indexOf("form")!=-1) {
+    				intent.putExtra(JOneConst.KEY_URL, "file:///android_asset/www/kendo/form.html");
+            	} else if (item.indexOf("listview")!=-1) {
+    				intent.putExtra(JOneConst.KEY_URL, "file:///android_asset/www/kendo/listview.html");
+            	} 
+    			getActivity().startActivity(intent);
+    		}
+        	getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
         }
     }
 }
