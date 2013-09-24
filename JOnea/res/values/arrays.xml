@@ -17,6 +17,7 @@
 	<string-array name="sample_android_menu_items">
 	    <item>User Interface:Layouts:description;Input Controls;Menus;Action Bar;Settings;Dialogs;Scroll View;</item>
     	<item>Connectivity:Bluetooth:description;NFC;Wi-Fi P2P;USB;SIP;</item>
+    	<item>Third Party:Vudroid PDF:description;</item>
 	</string-array>
 	
 	<string-array name="sample_jquery_mobile_menu_items">
@@ -31,7 +32,7 @@
 	</string-array>
 	
 	<string-array name="sample_kendo_mobile_menu_items">
-	    <item>User Interface:Buttons:description;ButtonGroup;ListView;</item>
+	    <item>User Interface:Form:description;ListView;</item>
     	<item>Animations:Touch Events:description;</item>
 	</string-array>
 </resources>

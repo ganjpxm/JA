@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/activity" android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@color/white">
+
+  	<include android:id="@+id/header" layout="@layout/common_header" />
+ 	
+ 	<WebView android:id="@+id/web_view" android:layout_height="fill_parent" android:layout_width="fill_parent"
+ 	    android:layout_below="@id/header" android:scrollbarSize="10dp" />
+ 	
+ 	<ProgressBar android:id="@+id/progress" android:visibility="gone" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_centerInParent="true" style="?android:attr/progressBarStyleInverse" />		
+</RelativeLayout>
