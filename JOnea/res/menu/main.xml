@@ -10,6 +10,7 @@
 	        <item android:id="@+id/sample" android:title="@string/sample" android:icon="@drawable/icon_mobile_black" yourapp:showAsAction="ifRoom|withText" />
 	        <item android:id="@+id/sync" android:title="@string/sync" android:icon="@drawable/icon_sync_green" yourapp:showAsAction="ifRoom|withText" />
 	        <item android:id="@+id/settings" android:title="@string/settings" android:icon="@drawable/icon_settings" yourapp:showAsAction="ifRoom|withText" />
+	        <item android:id="@+id/facebook_login" android:title="@string/facebook_login" android:icon="@drawable/icon_facebook" yourapp:showAsAction="ifRoom|withText" />
 	        <item android:id="@+id/global_menu_exit" android:title="@string/exit" android:icon="@drawable/icon_signout_gray" yourapp:showAsAction="ifRoom|withText" />
         </menu>
     </item>

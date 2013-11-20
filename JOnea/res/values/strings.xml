@@ -3,8 +3,10 @@
     <string name="app_name">JOne</string>
     <string name="app_title">JOne</string>
     <string name="app_sub_title">All In One</string>
+    <string name="app_id">748814301800570</string>  
     <!-- ****************************************** Home **************************************************-->
     <string name="home">HOME</string>
+    <string name="facebook_login">Facebook Login</string>
     
     <!-- ****************************************** JWeb **************************************************-->
     <string name="article">Article</string>
@@ -23,6 +25,9 @@
  	<string name="progress_dialog">Progress Dialog</string>
  	<string name="time_dialog">Time Dialog</string>
  	<string name="date_dialog">Date Dialog</string>
+ 	<!-- Facebook -->
+ 	<string name="query">Query</string>  
+    <string name="multiQuery">Multi-query</string> 
 
     <!-- ****************************************** Common -->
     <string name="loading">Loading</string>
