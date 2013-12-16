@@ -9,6 +9,8 @@ package org.ganjp.jone.common;
 import org.ganjp.jlib.core.BaseActivity;
 import org.ganjp.jone.R;
 
+import com.flurry.android.FlurryAgent;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,18 +29,22 @@ public abstract class JOneActivity extends BaseActivity {
 	protected Button mBackBtn;
 	protected TextView mTitleTv;
 	
-	/**
-	 * Called when the activity is first created
-	 */
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		FlurryAgent.setReportLocation(true);
+		FlurryAgent.onStartSession(getContext(), JOneConst.APP_FLURRY_KEY);
 		mTitleTv = (TextView)findViewById(R.id.title_tv);
 		mBackBtn = (Button)findViewById(R.id.left_btn);
 		if (mBackBtn!=null) {
 			mBackBtn.setOnClickListener(this);
 		}
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		FlurryAgent.onEndSession(getContext());
 	}
 	
 	/**

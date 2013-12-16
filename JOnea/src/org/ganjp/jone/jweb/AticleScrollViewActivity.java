@@ -2,6 +2,8 @@ package org.ganjp.jone.jweb;
 
 import java.util.List;
 
+import org.apache.http.protocol.HTTP;
+import org.ganjp.jlib.core.util.StringUtil;
 import org.ganjp.jlib.core.util.WebViewUtil;
 import org.ganjp.jlib.core.view.ScrollViewGroup;
 import org.ganjp.jlib.core.view.ScrollViewGroup.PageChangedListener;
@@ -65,7 +67,8 @@ public class AticleScrollViewActivity extends JOneActivity {
 		scrollView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, getScreenHeight()-100));
 		
 		TextView titleTv = (TextView)view.findViewById(R.id.title_tv);
-		titleTv.setText(mCmArticle.getTitle());
+		titleTv.setVisibility(View.GONE);
+		mTitleTv.setText(mCmArticle.getTitle());
 		titleTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,8 +88,13 @@ public class AticleScrollViewActivity extends JOneActivity {
 		WebView webView = (WebView)view.findViewById(R.id.article_wv);
 		WebViewUtil.initWebView(webView);
 		webView.setLayoutParams(new LinearLayout.LayoutParams(getScreenWidth()-20, LinearLayout.LayoutParams.MATCH_PARENT));
-		String htmlContent = mCmArticle.getContent();
-		webView.loadData(htmlContent, "text/html", "utf-8");
+		String htmlContent = "<html><head><meta name='viewport' content='width=device-width, initial-scale=1'><meta http-equiv='Content-Type' content='text/html; charset=UTF-8' /></head><body>";
+		htmlContent += mCmArticle.getContent();
+		htmlContent += "</body></html>";
+		
+//		webView.loadData(htmlContent, "text/html", HTTP.UTF_8);
+		webView.loadDataWithBaseURL(null,htmlContent, "text/html", "utf-8",null);
+		webView.getSettings().setDefaultTextEncodingName(HTTP.UTF_8);
 		pagers.addView(view);
 		
 		TextView moreTv = (TextView)view.findViewById(R.id.more_tv);

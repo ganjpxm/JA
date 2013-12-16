@@ -12,6 +12,7 @@ import java.util.Locale;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.ganjp.jlib.core.Const;
 import org.ganjp.jlib.core.util.HttpConnection;
 import org.ganjp.jlib.core.util.NetworkUtil;
@@ -90,7 +91,7 @@ public class SplashActivity extends JOneActivity {
 						ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 						pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_CD_OR_EMAIL, JOneConst.VALUE_LOGIN_USER_CD));
 						pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_PASSWORD, JOneConst.VALUE_LOGIN_PASSWORD));
-						httpConnection.post(JOneConst.URL_LOGIN, new UrlEncodedFormEntity(pairs));
+						httpConnection.post(JOneConst.URL_LOGIN, new UrlEncodedFormEntity(pairs, HTTP.UTF_8));
 						jsonData = HttpConnection.processEntity(httpConnection.getResponse().getEntity());
 						if (isTimeout==false) { 
 							JOneUtil.getDataFromJWeb(httpConnection, true);

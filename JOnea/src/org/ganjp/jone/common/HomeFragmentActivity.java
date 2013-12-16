@@ -6,17 +6,11 @@
  */
 package org.ganjp.jone.common;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
-import org.ganjp.jlib.core.util.DialogUtil;
-import org.ganjp.jlib.core.util.HttpConnection;
 import org.ganjp.jlib.core.util.StringUtil;
-import org.ganjp.jlib.core.util.ThreadUtil;
 import org.ganjp.jlib.core.view.PagerSlidingTabStrip;
 import org.ganjp.jone.R;
 import org.ganjp.jone.jweb.ArticleListFragment;
@@ -70,11 +64,8 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
     String jsonData = "";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (JOneUtil.getCategorys().isEmpty()) {
-			JOneUtil.setCategoryTagsValueFromWeb();
-		}
-		if (StringUtil.isEmpty(sCurrentCategory) && JOneUtil.getCategorys()!=null && !JOneUtil.getCategorys().isEmpty()) {
-			sCurrentCategory = JOneUtil.getCategorys().get(0);
+		if (StringUtil.isEmpty(sCurrentCategory) && JOneUtil.getArticleCategorys()!=null && !JOneUtil.getArticleCategorys().isEmpty()) {
+			sCurrentCategory = JOneUtil.getArticleCategorys().get(0);
 		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.common_activity_home);
@@ -85,15 +76,15 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 		actionBar.setSubtitle(getString(R.string.app_sub_title));
 		actionBar.setNavigationMode(actionBar.NAVIGATION_MODE_LIST);
 		SpinnerAdapter spinnerAdapter = null;
-		if (JOneUtil.getCategorys().isEmpty()) {
+		if (JOneUtil.getArticleCategorys()==null || JOneUtil.getArticleCategorys().isEmpty()) {
 			spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.category_list, android.R.layout.simple_spinner_dropdown_item);
-			JOneUtil.setCategorys(Arrays.asList(getResources().getStringArray(R.array.category_list)));
-			sCurrentCategory = JOneUtil.getCategorys().get(0);
+			JOneUtil.setArticleCategorys(Arrays.asList(getResources().getStringArray(R.array.category_list)));
+			sCurrentCategory = JOneUtil.getArticleCategorys().get(0);
 		} else {
-			spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, JOneUtil.getCategorys());
+			spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, JOneUtil.getArticleCategorys());
 		}
 		actionBar.setListNavigationCallbacks(spinnerAdapter, new DropDownListener());
-		actionBar.setSelectedNavigationItem(JOneUtil.getCategorys().indexOf(sCurrentCategory));
+		actionBar.setSelectedNavigationItem(JOneUtil.getArticleCategorys().indexOf(sCurrentCategory));
 		
 		viewPager = (ViewPager) findViewById(R.id.view_pager);
 		homePageAdapter = new HomePagerAdapter(getSupportFragmentManager());
@@ -142,12 +133,12 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 	private class DropDownListener implements OnNavigationListener {
 		@Override
 		public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-			String itemName = JOneUtil.getCategorys().get(itemPosition);
+			String itemName = JOneUtil.getArticleCategorys().get(itemPosition);
 			if (!sCurrentCategory.equals(itemName)) {
-				sCurrentCategory = itemName;
-				homePageAdapter = new HomePagerAdapter(getSupportFragmentManager());
-				viewPager.setAdapter(homePageAdapter);
-				pagerSlidingTabStrip.setViewPager(viewPager);
+				sCurrentCategory=itemName;
+				finish();
+		        startActivity(getIntent());
+		        transitSlideDown();
 			}
 			return true;
 		}
@@ -205,7 +196,7 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 					config.locale = Locale.SIMPLIFIED_CHINESE;
 				}
 			    resources.updateConfiguration(config, dm);
-			    JOneUtil.setCategoryTagsValueFromWeb();
+			    JOneUtil.setArticleCategoryAndTagsWithCommaFromWeb(PreferenceUtil.getString(JOneConst.KEY_PREFERENCE_LANG));
 			    sCurrentCategory = "";
 				finish();
 		        startActivity(getIntent());
@@ -217,40 +208,43 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 		        transitForward();
 			    return true;
 			case R.id.sync :
-				DialogUtil.showMessageDialog(this, getString(R.string.syncing));
-				ThreadUtil.run(new Runnable() {
-		       		@Override
-		            public void run() {
-		       			if (StringUtil.isEmpty(jsonData)) {
-		       				isTimeout = true;
-		       				DialogUtil.dismissProgressDialog();
-		       				showToastFromBackground(JOneConst.TIMEOUT);
-		       			}
-		            }
-		    	}, 15*1000);
+//				DialogUtil.showMessageDialog(this, getString(R.string.syncing));
+//				ThreadUtil.run(new Runnable() {
+//		       		@Override
+//		            public void run() {
+//		       			if (StringUtil.isEmpty(jsonData)) {
+//		       				isTimeout = true;
+//		       				DialogUtil.dismissProgressDialog();
+//		       				showToastFromBackground(JOneConst.TIMEOUT);
+//		       			}
+//		            }
+//		    	}, 15*1000);
+//				
+//				new Thread (new Runnable() {
+//					public void run() {
+//						try {
+//							HttpConnection httpConnection = new HttpConnection(false);
+//							//login
+//							ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+//							pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_CD_OR_EMAIL, JOneConst.VALUE_LOGIN_USER_CD));
+//							pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_PASSWORD, JOneConst.VALUE_LOGIN_PASSWORD));
+//							httpConnection.post(JOneConst.URL_LOGIN, new UrlEncodedFormEntity(pairs));
+//							jsonData = HttpConnection.processEntity(httpConnection.getResponse().getEntity());
+//							if (isTimeout==false) { 
+//								JOneUtil.getDataFromJWeb(httpConnection, false);
+//								DialogUtil.dismissProgressDialog();
+//								showToastFromBackground(JOneConst.SUCCESS);
+//							}
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//							DialogUtil.dismissProgressDialog();
+//							showToastFromBackground(JOneConst.FAIL);
+//						}	
+//					}
+//				}).start();
+				return true;
+			case R.id.facebook_login :
 				
-				new Thread (new Runnable() {
-					public void run() {
-						try {
-							HttpConnection httpConnection = new HttpConnection(false);
-							//login
-							ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-							pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_CD_OR_EMAIL, JOneConst.VALUE_LOGIN_USER_CD));
-							pairs.add(new BasicNameValuePair(JOneConst.KEY_LOGIN_USER_PASSWORD, JOneConst.VALUE_LOGIN_PASSWORD));
-							httpConnection.post(JOneConst.URL_LOGIN, new UrlEncodedFormEntity(pairs));
-							jsonData = HttpConnection.processEntity(httpConnection.getResponse().getEntity());
-							if (isTimeout==false) { 
-								JOneUtil.getDataFromJWeb(httpConnection, false);
-								DialogUtil.dismissProgressDialog();
-								showToastFromBackground(JOneConst.SUCCESS);
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-							DialogUtil.dismissProgressDialog();
-							showToastFromBackground(JOneConst.FAIL);
-						}	
-					}
-				}).start();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -262,11 +256,16 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 
 		public HomePagerAdapter(FragmentManager fm) {
 			super(fm);
-			String tags = JOneUtil.getCategoryTagsMap().get(sCurrentCategory);
-			if (StringUtil.isEmpty(tags)) {
+			Map<String,String> articleCategoryAndTagWithComma = JOneUtil.getArticleCategoryAndTagWithComma();
+			if (articleCategoryAndTagWithComma==null) {
 				tabItems = new String[] { getString(R.string.menu) };
 			} else {
-				tabItems = tags.split(",");
+				String tags = articleCategoryAndTagWithComma.get(sCurrentCategory);
+				if (StringUtil.isEmpty(tags)) {
+					tabItems = new String[] { getString(R.string.menu) };
+				} else {
+					tabItems = tags.split(",");
+				}
 			}
 		}
 
@@ -283,7 +282,7 @@ public class HomeFragmentActivity extends JOneActionBarActivity {
 		@Override
 		public Fragment getItem(int position) {
 			String tag = tabItems[position];
-			if (JOneUtil.getTags().indexOf(tag)!=-1) {
+			if (JOneUtil.getArticleTagWithComma().indexOf(tag)!=-1) {
 				return ArticleListFragment.newInstance(tag);
 			} else {
 				return WhiteCardFragment.newInstance(position);

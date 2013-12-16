@@ -39,10 +39,10 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
 	private ListView mKnowledgeListView = null;
 	private ArticleListAdapter mArticleListAdapter = null;
 
-	public static ArticleListFragment newInstance(String tag) {
+	public static ArticleListFragment newInstance(String aTag) {
 		ArticleListFragment f = new ArticleListFragment();
 		Bundle b = new Bundle();
-		b.putString(JOneConst.KEY_TAG, tag);
+		b.putString(JOneConst.KEY_TAG, aTag);
 		f.setArguments(b);
 		return f;
 	}
@@ -52,7 +52,7 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
 		super.onCreate(savedInstanceState);
 		tag = getArguments().getString(JOneConst.KEY_TAG);
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.jweb_list_view, container, false);
@@ -60,7 +60,11 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
 		if (StringUtil.isNotEmpty(tag)) {
 			List<CmArticle> cmArticles = CmArticleDAO.getInstance().getCmArticles(tag, PreferenceUtil.getString(JOneConst.KEY_PREFERENCE_LANG));
 			for (CmArticle cmArticle : cmArticles) {
-				items.add(new Item(cmArticle.getArticleId(), cmArticle.getImageUrl(), cmArticle.getTitle(), cmArticle.getSummary()));
+				String imageName = cmArticle.getImageUrl();
+				if (cmArticle.getImageUrl().indexOf("/")!=-1) {
+					imageName = imageName.substring(imageName.lastIndexOf("/")+1);
+				}
+				items.add(new Item(cmArticle.getArticleId(), imageName, cmArticle.getTitle(), cmArticle.getSummary()));
 			}
 		}
 		mKnowledgeListView = (ListView) view.findViewById(R.id.listview);

@@ -7,6 +7,7 @@
 package org.ganjp.jone.jweb.dao;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -178,6 +179,7 @@ public class CmArticleDAO extends DAO {
 		if (StringUtil.isNotEmpty(tag)) {
 			sql += " and " + COLUMN_TAG + " like '%" + tag + "%'";
 		}
+		sql += " order by " + Const.COLUMN_MODIFY_TIMESTAMP + " desc";
 		return getCmArticlesBySql(sql);
 	}
 	
@@ -249,6 +251,37 @@ public class CmArticleDAO extends DAO {
 			}
 		}
 		return cmArticle;
+	}
+	
+	/**
+	 * <p>Get all the CmArticle ID</p>
+	 * 
+	 * @return 
+	 */
+	public List<String> getArticleIds() {
+		String query = "SELECT " + COLUMN_ARTICLE_ID + " FROM " + TABLE_NAME;
+		Log.d(TAG, "query:"+query);
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		List<String> articleIds = new ArrayList<String>();
+		try {
+			db = this.getDatabase();
+			cursor = db.rawQuery(query, null);
+			if (cursor!=null && cursor.getCount()>0) {
+				cursor.moveToFirst();
+				articleIds.add(cursor.getString(cursor.getColumnIndex(COLUMN_ARTICLE_ID)));
+			}
+		} catch( Exception ex ) {
+		}finally{
+			if ( cursor!=null ){
+				cursor.close();	
+				cursor = null;
+			}
+			if (db!=null) {
+				db.close();
+			}
+		}
+		return articleIds;
 	}
 	
 	/**

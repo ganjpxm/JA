@@ -9,6 +9,8 @@ package org.ganjp.jone.common;
 import org.ganjp.jlib.core.BaseActionBarActivity;
 import org.ganjp.jone.R;
 
+import com.flurry.android.FlurryAgent;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +30,9 @@ public abstract class JOneActionBarActivity extends BaseActionBarActivity {
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		FlurryAgent.setReportLocation(true);
+		FlurryAgent.setContinueSessionMillis(10 * 1000); //Set the timeout for expiring a Flurry session.
+		FlurryAgent.onStartSession(getContext(), JOneConst.APP_FLURRY_KEY);
 		JOneActivityManager.getInstance().pushActivity(this);
 	}
 	

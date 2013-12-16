@@ -76,7 +76,7 @@ public class WhiteCardFragment extends Fragment {
 		v.setLayoutParams(params);
 		v.setGravity(Gravity.CENTER);
 		v.setBackgroundResource(R.drawable.background_card);
-		v.setText("CARD " + (position + 1));
+		v.setText("No Record " + (position + 1));
 
 		fl.addView(v);
 		return fl;

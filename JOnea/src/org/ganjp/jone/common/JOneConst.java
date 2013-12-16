@@ -10,9 +10,10 @@ public abstract class JOneConst {
 	public static final String APP_VENDOR = "JAPP";
 	public static final String APP_PACKAGE = "org.ganjp.jone";
 	public static final String APP_VERSION = "1.0.0";
+	public static final String APP_FLURRY_KEY = "GBTS23FZ6DXH7KQ27R4G";
 	
 	//----------------------------- JWeb -----------------
-//	public static final String SERVER_IP = "http://192.168.0.103:8080/jp";
+//	public static final String SERVER_IP = "http://192.168.1.102:8080/jp";
 	public static final String SERVER_IP = "http://www.ganjianping.com";
 	public static final String URL_LOGIN = SERVER_IP + "/login";
 	public static final String URL_GET_BM_CONFIGS = SERVER_IP + "/mobile/getBmConfigs";
