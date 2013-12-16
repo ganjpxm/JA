@@ -8,6 +8,8 @@ package org.ganjp.jlib.core.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -809,6 +811,24 @@ public class StringUtil {
 
 		return output;
 	}
+	
+	
+	public static boolean isAContainBone(String aWithComma, String bWithComma) {
+		if (isEmpty(aWithComma) || isEmpty(bWithComma)) {
+			return false;
+		}
+		aWithComma = aWithComma.toLowerCase();
+		bWithComma = bWithComma.toLowerCase();
+		List<String> aList = Arrays.asList(aWithComma.split(","));
+		String[] bArr = bWithComma.split(",");
+		for (String b : bArr) {
+			if (aList.contains(b)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		System.out.println((int)'A');//45 48-57 65-122
 	}
