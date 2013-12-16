@@ -4,12 +4,12 @@
 	android:layout_height="fill_parent" android:background="@color/white">
 
  	<ScrollView android:id="@+id/scroll_view" android:layout_width="match_parent" android:layout_height="match_parent" >
-	 	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" android:padding="10dp">
+	 	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" android:padding="5dp">
 	 	    <TextView android:id="@+id/title_tv"  android:layout_width="wrap_content" android:layout_height="wrap_content" 
 	 	        android:layout_gravity="center_horizontal" android:text="@string/empty" android:textColor="@color/black" android:layout_margin="5dp"
 		        android:textAppearance="?android:attr/textAppearanceLarge" />
 	 	    <ImageView android:id="@+id/cover_iv" android:layout_width="fill_parent" android:layout_height="200dp"
-	            android:layout_gravity="center_horizontal" android:background="#00ffffff" android:layout_marginRight="10dp"
+	            android:layout_gravity="center_horizontal" android:background="#00ffffff" 
 	            android:contentDescription="@string/empty" android:visibility="gone" >
 	       	</ImageView>
 	       	<WebView android:id="@+id/article_wv" android:layout_height="wrap_content" android:layout_width="match_parent" android:background="@color/white"
