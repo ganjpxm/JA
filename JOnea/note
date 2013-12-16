@@ -1,0 +1,11 @@
+keystore:1qazxsw2
+Flurry : unique application key is GBTS23FZ6DXH7KQ27R4G, ganjp_xm@hotmail.com:g13
+
+v1.0.1
+Fix issue : startup crash
+
+v1.0.2
+Add flurry session.
+Change the article detail layout.
+Fix issue : Download images from jpweb and display the images
+Articles order by modify time
